@@ -21,12 +21,14 @@ ext.pomName = 'TestFX JUnit5'
 ext.pomDescription = 'TestFX JUnit5 library'
 ext.moduleName = 'org.testfx.junit5'
 ext.openjfxVersion = '23.0.1'
+ext.headlessSDKPath= "${System.properties['user.home']}${File.separator}Downloads${File.separator}javafx-sdk-24"
 
 repositories {
     mavenCentral()
 }
 
 javafx {
+    sdk = headlessSDKPath
     version = openjfxVersion
     modules = [ 'javafx.controls', 'javafx.swing', 'javafx.fxml' ]
 }
@@ -43,8 +45,6 @@ afterEvaluate {
         testImplementation group: 'org.hamcrest', name: 'hamcrest', version: '3.0'
         implementation "org.assertj:assertj-core:3.26.3"
         testImplementation 'org.awaitility:awaitility:4.2.2'
-
-        testImplementation 'org.testfx:openjfx-monocle:jdk-12.0.1+2'
     }
 
     configurations {

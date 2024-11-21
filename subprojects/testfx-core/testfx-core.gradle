@@ -21,12 +21,14 @@ ext.pomName = 'TestFX Core'
 ext.pomDescription = 'TestFX core library'
 ext.moduleName = 'org.testfx'
 ext.openjfxVersion = '23.0.1'
+ext.headlessSDKPath= "${System.properties['user.home']}${File.separator}Downloads${File.separator}javafx-sdk-24"
 
 repositories {
     mavenCentral()
 }
 
 javafx {
+    sdk = headlessSDKPath
     version = openjfxVersion
     modules = [ 'javafx.controls', 'javafx.swing', 'javafx.fxml' ]
 }
@@ -44,8 +46,6 @@ dependencies {
     testImplementation group: 'org.hamcrest', name: 'hamcrest-core', version: '3.0'
 
     testImplementation "org.mockito:mockito-core:5.14.2"
-
-    testImplementation 'org.testfx:openjfx-monocle:jdk-12.0.1+2'
 
     configurations {
         apiElements {

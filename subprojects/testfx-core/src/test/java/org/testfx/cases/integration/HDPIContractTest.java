@@ -31,6 +31,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.AssumptionViolatedException;
 import org.junit.Before;
@@ -48,6 +49,8 @@ import org.testfx.service.adapter.impl.GlassRobotAdapter;
 import org.testfx.service.locator.impl.BoundsLocatorImpl;
 import org.testfx.util.WaitForAsyncUtils;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.core.IsEqual.equalTo;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
@@ -163,6 +166,8 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void mouseLocationAwtAdapterTest() {
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         try {
             mouseLocationAdapterTest(awtAdapter);
         }
@@ -188,6 +193,8 @@ public class HDPIContractTest extends FxRobot {
      * JavaFx coordinates.
      */
     public void nullOffsetAdapterTest(RobotAdapter<?> adapter) {
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         interact(() -> {
             stage.setX(0);
             stage.setY(0);
@@ -283,6 +290,8 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void nullOffsetAwtAdapterTest() {
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         try {
             nullOffsetAdapterTest(awtAdapter);
         }
@@ -388,6 +397,8 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void defaultOffsetAwtAdapterTest() {
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         try {
             defaultOffsetAdapterTest(awtAdapter);
         }
@@ -448,6 +459,8 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void capturePixelColorAwtAdapterTest() {
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         try {
             capturePixelColorAdapterTest(awtAdapter);
         }
@@ -458,6 +471,9 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void capturePixelColorGlassAdapterTest() {
+        // TODO HEADLESS: Enable screen capture
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         try {
             capturePixelColorAdapterTest(glassAdapter);
         }
@@ -524,6 +540,8 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void captureRegionAwtAdapterTest() {
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         try {
             captureRegionAdapterTest(awtAdapter);
         }
@@ -534,6 +552,9 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void captureRegionGlassAdapterTest() {
+        // TODO HEADLESS: Enable screen capture
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         try {
             captureRegionAdapterTest(glassAdapter);
         }
@@ -600,6 +621,8 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void clickOffsetAwtAdapterTest() {
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         try {
             clickOffsetAdapterTest(awtAdapter);
         }

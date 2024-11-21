@@ -23,6 +23,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
@@ -34,7 +35,10 @@ import org.testfx.api.FxToolkit;
 import org.testfx.util.WaitForAsyncUtils;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.junit.Assert.fail;
+import static org.junit.Assume.assumeThat;
 
 /**
  * This class tests exception handling of the GUI within the JUnit framework.
@@ -76,6 +80,9 @@ public class JUnitExceptionTest extends ApplicationTest {
      */
     @Test
     public void exceptionOnClickTest() throws Throwable {
+        // TODO HEADLESS: Fix KeyEvent issue
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         // Hints for failing tests: Timing might be an issue increase also the
         // time in checkException()
         WaitForAsyncUtils.printException = false; // do not print expected exception to log

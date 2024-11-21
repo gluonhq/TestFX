@@ -4,9 +4,9 @@
 [![Maven Central](https://img.shields.io/maven-central/v/org.testfx/testfx-core.svg?label=maven&style=flat-square)](https://search.maven.org/#search|ga|1|org.testfx)
 [![Chat on Gitter](https://img.shields.io/gitter/room/testfx/testfx-core.svg?style=flat-square)](https://gitter.im/TestFX/TestFX)
 
-Simple and clean testing for JavaFX.
+Simple and clean testing for JavaFX 23, or higher.
 
-TestFX 4 requires Java version of 8 (1.8), or higher, and has only legacy support.
+TestFX 4 requires Java version of 21, or higher.
 
 ## Documentation
 
@@ -22,11 +22,12 @@ TestFX 4 requires Java version of 8 (1.8), or higher, and has only legacy suppor
 
 **Support for:**
 
-- Java 8/11/17+
+- Java 21+
+- JavaFX 23+
 - Multiple testing frameworks ([JUnit 4](https://junit.org/junit4/), [JUnit 5](https://junit.org/junit5/), and [Spock](http://spockframework.org/)).
 - [Hamcrest](http://hamcrest.org/) matchers or [AssertJ](https://assertj.github.io/doc/) assertions (or both!).
 - Screenshots of failed tests.
-- Headless testing using [Monocle](https://github.com/TestFX/Monocle).
+- Headless testing using the experimental [Headless platform](https://github.com/openjdk/jfx-sandbox/tree/johanvos-headless).
 
 ## Gradle
 
@@ -34,13 +35,11 @@ To add a dependency on TestFX using Gradle, use the following:
 
 ```gradle
 dependencies {
-    testCompile "org.testfx:testfx-core:4.0.18"
+    testCompile "org.testfx:testfx-core:4.0.19-gluon-SNAPSHOT"
 }
 ```
 
-### Java 11+
-Beginning with Java 11, JavaFX is no longer part of the JDK. It has been extracted to its own project: [OpenJFX](https://openjfx.io). This means, extra dependencies must be added to your project.
-
+### JavaFX
 The easiest way to add the JavaFX libraries to your Gradle project is to use the [JavaFX Gradle Plugin](https://github.com/openjfx/javafx-gradle-plugin).
 
 After following the README for the JavaFX Gradle Plugin you will end up with something like:
@@ -63,8 +62,8 @@ Next add a dependency corresponding to the testing framework you are using in yo
 
 ```gradle
 dependencies {
-    testCompile "junit:junit:4.13-beta-3"
-    testCompile "org.testfx:testfx-junit:4.0.18"
+    testCompile "junit:junit:4.13.2"
+    testCompile "org.testfx:testfx-junit:4.0.19-gluon-SNAPSHOT"
 }
 ```
 
@@ -72,8 +71,8 @@ dependencies {
 
 ```gradle
 dependencies {
-    testCompile 'org.junit.jupiter:junit-jupiter-api:5.5.1'
-    testCompile "org.testfx:testfx-junit5:4.0.18"
+    testCompile 'org.junit.jupiter:junit-jupiter-api:5.11.3'
+    testCompile "org.testfx:testfx-junit5:4.0.19-gluon-SNAPSHOT"
 }
 ```
 
@@ -81,21 +80,22 @@ dependencies {
 
 ```gradle
 dependencies {
-    testCompile "org.spockframework:spock-core:1.3-groovy-2.5"
-    testCompile "org.testfx:testfx-spock:4.0.18"
+    testCompile "org.spockframework:spock-core:2.4-M4-groovy-4.0"
+    testCompile "org.testfx:testfx-spock:4.0.19-gluon-SNAPSHOT"
 }
 ```
+
 ### Matcher/Assertions Library
 Finally you must add a dependency corresponding to the matcher/assertions libraries that you want to use with TestFX. TestFX currently supports Hamcrest matchers or AssertJ assertions.
 
 #### Hamcrest
 ```gradle
-testCompile group: 'org.hamcrest', name: 'hamcrest', version: '2.1'
+testCompile group: 'org.hamcrest', name: 'hamcrest', version: '3.0'
 ```
 
 #### AssertJ
 ```gradle
-testCompile group: 'org.assertj', name: 'assertj-core', version: '3.13.2'
+testCompile group: 'org.assertj', name: 'assertj-core', version: '3.26.3'
 ```
 
 ## Maven
@@ -106,14 +106,12 @@ To add a dependency on TestFX using Maven, use the following:
 <dependency>
     <groupId>org.testfx</groupId>
     <artifactId>testfx-core</artifactId>
-    <version>4.0.18</version>
+    <version>4.0.19-gluon-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
 ```
 
-### Java 11+
-Beginning with Java 11, JavaFX is no longer part of the JDK. It has been extracted to its own project: [OpenJFX](https://openjfx.io). This means, extra dependencies must be added to your project.
-
+### JavaFX
 The easiest way to add the JavaFX libraries to your Maven project is to use the [JavaFX Maven Plugin](https://github.com/openjfx/javafx-maven-plugin).
 
 After following the README for the JavaFX Maven Plugin you will end up with something like:
@@ -123,7 +121,7 @@ After following the README for the JavaFX Maven Plugin you will end up with some
     <dependency>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-controls</artifactId>
-        <version>12.0.2</version>
+        <version>23.0.1</version>
     </dependency>
 </dependencies>
 
@@ -131,7 +129,7 @@ After following the README for the JavaFX Maven Plugin you will end up with some
     <plugin>
         <groupId>org.openjfx</groupId>
         <artifactId>javafx-maven-plugin</artifactId>
-        <version>0.0.3</version>
+        <version>0.0.8</version>
         <configuration>
             <mainClass>hellofx/org.openjfx.App</mainClass>
         </configuration>
@@ -150,13 +148,13 @@ Next add a dependency corresponding to the testing framework you are using in yo
 <dependency>
     <groupId>junit</groupId>
     <artifactId>junit</artifactId>
-    <version>4.13-beta-3</version>
+    <version>4.13.2</version>
     <scope>test</scope>
 </dependency>
 <dependency>
     <groupId>org.testfx</groupId>
     <artifactId>testfx-junit</artifactId>
-    <version>4.0.18</version>
+    <version>4.0.19-gluon-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -167,13 +165,13 @@ Next add a dependency corresponding to the testing framework you are using in yo
 <dependency>
     <groupId>org.junit.jupiter</groupId>
     <artifactId>junit-jupiter-api</artifactId>
-    <version>5.5.1</version>
+    <version>5.11.3</version>
     <scope>test</scope>
 </dependency>
 <dependency>
     <groupId>org.testfx</groupId>
     <artifactId>testfx-junit5</artifactId>
-    <version>4.0.18</version>
+    <version>4.0.19-gluon-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -184,13 +182,13 @@ Next add a dependency corresponding to the testing framework you are using in yo
 <dependency>
     <groupId>org.spockframework</groupId>
     <artifactId>spock-core</artifactId>
-    <version>1.3-groovy-2.5</version>
+    <version>2.4-M4-groovy-4.0</version>
     <scope>test</scope>
 </dependency>
 <dependency>
     <groupId>org.testfx</groupId>
     <artifactId>testfx-spock</artifactId>
-    <version>4.0.18</version>
+    <version>4.0.19-gluon-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -203,7 +201,7 @@ Finally you must add a dependency corresponding to the matcher/assertions librar
 <dependency>
     <groupId>org.hamcrest</groupId>
     <artifactId>hamcrest</artifactId>
-    <version>2.1</version>
+    <version>3.0</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -213,7 +211,7 @@ Finally you must add a dependency corresponding to the matcher/assertions librar
 <dependency>
     <groupId>org.assertj</groupId>
     <artifactId>assertj-core</artifactId>
-    <version>3.13.2</version>
+    <version>3.26.3</version>
     <scope>test</scope>
 </dependency>
 ```
@@ -490,202 +488,29 @@ class ClickableButtonSpec extends ApplicationSpec {
 }
 ```
 
-## Continuous Integration (CI)
+## Headless Platform
 
-### Travis CI
+### Install
 
-To run TestFX tests as part of your Travis CI build on Ubuntu and/or macOS
-take the following steps:
+Download the latest SDK of the experimental headless platform from here:
 
-1. Ensure that your unit tests are triggered as part of your build script. This
-   is usually the default case when using Maven or Gradle.
-2. If you wish to test in a headless environment your must add [Monocle](https://github.com/TestFX/Monocle)
-    as a test dependency:
+https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_linux-aarch64_bin-sdk.zip
+https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_linux-x86_64_bin-sdk.zip
+https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_mac-aarch64_bin-sdk.zip
+https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_mac-x86_64_bin-sdk.zip
+https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_windows-x86_64_bin-sdk.zip
 
-    `build.gradle`
-    ```gradle
-    dependencies {
-        testCompile "org.testfx:openjfx-monocle:8u76-b04" // jdk-9+181 for Java 9, jdk-11+26 for Java 11
-    }
-    ```
+exaatract the zip file into ~/Downloads.
 
-    `pom.xml`
-    ```xml
-    <dependency>
-        <groupId>org.testfx</groupId>
-        <artifactId>openjfx-monocle</artifactId>
-        <version>8u76-b04</version> <!-- jdk-9+181 for Java 9, jdk-11+26 for Java 11 -->
-        <scope>test</scope>
-    </dependency>
-    ```
-3. Base your Travis configuration on the following. Some different build variations are shown (Glass/AWT robot,
-    Headed/Headless, (Hi)DPI, etc.) adjust the build matrix to your requirements.
+### Run tests
 
-    `.travis.yml`
-    ``` yaml
-    language: java
-
-    sudo: false   # Linux OS: run in container
-
-    matrix:
-      include:
-        # Ubuntu Linux (trusty) / Oracle JDK 8 / Headed (AWT Robot)
-        - os: linux
-          dist: trusty
-          jdk: oraclejdk8
-          env:
-            - _JAVA_OPTIONS="-Dtestfx.robot=awt"
-        # Ubuntu Linux (trusty) / Oracle JDK 8 / Headed (Glass Robot) / HiDPI
-        - os: linux
-          dist: trusty
-          jdk: oraclejdk8
-          env:
-            - _JAVA_OPTIONS="-Dtestfx.robot=glass -Dglass.gtk.uiScale=2.0"
-        # Ubuntu Linux (trusty) / Oracle JDK 8 / Headless
-        - os: linux
-          dist: trusty
-          jdk: oraclejdk8
-          env:
-            - _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw"
-        # macOS / Oracle JDK 8 / Headless
-        - os: osx
-          osx_image: xcode9.4
-          jdk: oraclejdk8
-          env:
-            - _JAVA_OPTIONS="-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.verbose=true"
-        # Headed macOS is not currently possible on Travis.
-
-    addons:
-      apt:
-        packages:
-          - oracle-java8-installer
-
-    before_install:
-      - if [[ "${TRAVIS_OS_NAME}" == linux ]]; then export DISPLAY=:99.0; sh -e /etc/init.d/xvfb start; fi
-
-    install: true
-
-    before_script:
-      - if [[ "${TRAVIS_OS_NAME}" == osx ]]; then brew update; brew cask reinstall caskroom/versions/java8; fi
-
-    script:
-      - ./gradlew check
-
-    before_cache:
-      - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-      - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-      - rm -f  $HOME/.gradle/caches/*/fileHashes/fileHashes.bin
-      - rm -f  $HOME/.gradle/caches/*/fileHashes/fileHashes.lock
-
-    cache:
-      directories:
-        - $HOME/.gradle/caches/
-        - $HOME/.gradle/wrapper/
-        - $HOME/.m2
-    ```
-
-Your TestFX tests should now run as part of your Travis CI build.
-
-### Appveyor (Windows)
-
-To run TestFX tests as part of your Appveyor build on Windows take the following
-steps:
-
-1. Ensure that your unit tests are triggered as part of your build script. This
-   is usually the default case when using Maven or Gradle.
-2. If you wish to test in a headless environment your must add [Monocle](https://github.com/TestFX/Monocle)
-    as a test dependency:
-
-    `build.gradle`
-    ```gradle
-    dependencies {
-        testCompile "org.testfx:openjfx-monocle:8u76-b04" // jdk-9+181 for Java 9
-    }
-    ```
-
-    `pom.xml`
-    ```xml
-    <dependency>
-        <groupId>org.testfx</groupId>
-        <artifactId>openjfx-monocle</artifactId>
-        <version>8u76-b04</version> <!-- jdk-9+181 for Java 9 -->
-        <scope>test</scope>
-    </dependency>
-    ```
-3. Base your Appveyor configuration on the following. Some different build variations are shown (Glass/AWT robot,
-    Headed/Headless, (Hi)DPI, etc.) adjust the build matrix to your requirements.
-
-    `appveyor.yml`
-    ```yaml
-    version: "{branch} {build}"
-    environment:
-      matrix:
-        # Java 8 / AWT Robot
-        - JAVA_VERSION: "8"
-          JAVA_HOME: C:\Program Files\Java\jdk1.8.0
-          _JAVA_OPTIONS: "-Dtestfx.robot=awt -Dtestfx.awt.scale=true"
-        # Java 8 / AWT Robot / HiDPI
-        - JAVA_VERSION: "8"
-          JAVA_HOME: C:\Program Files\Java\jdk1.8.0
-          _JAVA_OPTIONS: "-Dtestfx.robot=awt -Dtestfx.awt.scale=true -Dglass.win.uiScale=200%"
-        # Java 8 / Headless
-        - JAVA_VERSION: "8"
-          JAVA_HOME: C:\Program Files\Java\jdk1.8.0
-          _JAVA_OPTIONS: "-Djava.awt.headless=true -Dtestfx.robot=glass -Dtestfx.headless=true -Dprism.order=sw -Dprism.text=t2k"
-        # Java 10 / AWT Robot / HiDPI
-        - JAVA_VERSION: "10"
-          JAVA_HOME: C:\jdk10
-          _JAVA_OPTIONS: "-Dtestfx.robot=awt -Dtestfx.awt.scale=true -Dglass.win.uiScale=200%"
-        # Java 11 / AWT Robot / HiDPI
-        - JAVA_VERSION: "11"
-          JAVA_HOME: C:\jdk11
-          _JAVA_OPTIONS: "-Dtestfx.robot=awt -Dtestfx.awt.scale=true -Dglass.win.uiScale=200%"
-
-    build_script:
-      - ps: |
-          if ($env:JAVA_VERSION -eq "11") {
-            $client = New-Object net.webclient
-            $client.DownloadFile('http://jdk.java.net/11/', 'C:\Users\appveyor\openjdk11.html')
-            $openJdk11 = cat C:\Users\appveyor\openjdk11.html | where { $_ -match "href.*https://download.java.net.*jdk11.*windows-x64.*zip\`"" } | %{ $_ -replace "^.*https:", "https:" } | %{ $_ -replace ".zip\`".*$", ".zip" }
-            echo "Download boot JDK from: $openJdk11"
-            $client.DownloadFile($openJdk11, 'C:\Users\appveyor\openjdk11.zip')
-            Expand-Archive -Path 'C:\Users\appveyor\openjdk11.zip' -DestinationPath 'C:\Users\appveyor\openjdk11'
-            Copy-Item -Path 'C:\Users\appveyor\openjdk11\*\' -Destination 'C:\jdk11' -Recurse -Force
-          }
-          elseif ($env:JAVA_VERSION -eq "10") {
-            choco install jdk10 --version 10.0.2 --force --cache 'C:\ProgramData\chocolatey\cache' -params 'installdir=c:\\jdk10'
-          }
-
-          // Note: Currently Java 8 is the default JDK, if that changes the above will have to change accordingly.
-
-    shallow_clone: true
-
-    build:
-      verbosity: detailed
-
-    test_script:
-      - gradlew build --no-daemon
-
-    cache:
-      - C:\Users\appveyor\.gradle\caches
-      - C:\Users\appveyor\.gradle\wrapper -> .gradle-wrapper\gradle-wrapper.properties
-      - C:\ProgramData\chocolatey\bin -> appveyor.yml
-      - C:\ProgramData\chocolatey\lib -> appveyor.yml
-      - C:\ProgramData\chocolatey\cache -> appveyor.yml
-    ```
+```
+export _JAVA_OPTIONS=-Dtestfx.headless=true
+sh gradlew test
+```
 
 ## Chat
 
 Head over to our [gitter chat](https://gitter.im/TestFX/TestFX) for discussion and questions.
-
-## TestFX Legacy: Deprecated
-
-The `testfx-legacy` subproject is deprecated and no longer supported. It is highly recommended
-that you switch from using `testfx-legacy`. If you want to continue using it you should cap
-the versions of `testfx-core` and `testfx-legacy` to `4.0.8-alpha`, which was the last released
-version of `testfx-legacy`. Using a newer version of `testfx-core` with an older version of
-`testfx-legacy` will very likely break (and does with `testfx-core` versions past `4.0.10-alpha`).
-
-## Credits
 
 Thanks to all of the [contributors of TestFX](https://github.com/TestFX/TestFX/graphs/contributors)!

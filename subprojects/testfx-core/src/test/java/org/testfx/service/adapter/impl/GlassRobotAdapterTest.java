@@ -213,6 +213,8 @@ public class GlassRobotAdapterTest {
     @Test
     public void getCapturePixelColor() {
         // given:
+        // TODO HEADLESS: Enable screen capture
+        assumeThat(System.getProperty("testfx.headless"), is(not(equalTo("true"))));
         assumeThat(System.getenv("TRAVIS_OS_NAME"), is(not(equalTo("osx"))));
         assumeThat(System.getProperty("prism.order", ""), is(not(equalTo("d3d"))));
 
@@ -226,6 +228,8 @@ public class GlassRobotAdapterTest {
     @Test
     public void getCaptureRegion() {
         // given:
+        // TODO HEADLESS: Enable screen capture
+        assumeThat(System.getProperty("testfx.headless"), is(not(equalTo("true"))));
         assumeThat(System.getenv("TRAVIS_OS_NAME"), is(not(equalTo("osx"))));
         assumeThat(System.getProperty("prism.order", ""), is(not(equalTo("d3d"))));
 

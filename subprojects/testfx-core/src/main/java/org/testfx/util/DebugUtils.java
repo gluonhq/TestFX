@@ -590,7 +590,10 @@ public final class DebugUtils {
             function = insertHeader(headerText).compose(function);
         }
         if (takeScreenshot) {
-            function = saveScreenshot().compose(function);
+            // TODO HEADLESS: Enable screen capture
+            if (!Boolean.getBoolean("testfx.headless")) {
+                function = saveScreenshot().compose(function);
+            }
         }
         if (showKeysPressed) {
             function = showKeysPressedAtTestFailure(robot, DEFAULT_INDENT).compose(function);

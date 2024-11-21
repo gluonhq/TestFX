@@ -26,6 +26,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.VBox;
 
+import org.hamcrest.CoreMatchers;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -37,6 +38,9 @@ import org.testfx.api.FxToolkit;
 import org.testfx.util.WaitForAsyncUtils;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
+import static org.junit.Assume.assumeThat;
 import static org.testfx.api.FxAssert.verifyThat;
 import static org.testfx.util.DebugUtils.informedErrorMessage;
 
@@ -118,6 +122,9 @@ public class ShortcutKeyTest extends FxRobot {
      */
     @Test
     public void shortcut_keyCode_converts_to_OS_specific_keyCode_when_pressed() {
+        // TODO HEADLESS: Fix KeyEvent issue
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         // when:
         press(KeyCode.SHORTCUT);
 
@@ -130,6 +137,9 @@ public class ShortcutKeyTest extends FxRobot {
      */
     @Test
     public void shortcut_keyCode_converts_to_OS_specific_keyCode_when_released() { //fix 589, 590
+        // TODO HEADLESS: Fix KeyEvent issue
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         // given:
         press(KeyCode.SHORTCUT);
 
@@ -148,6 +158,9 @@ public class ShortcutKeyTest extends FxRobot {
      */
     @Test
     public void shortcut_keyCode_copy_paste() {
+        // TODO HEADLESS: Fix KeyEvent issue
+        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
+
         // given:
         verifyThat(field1.getText(), equalTo(initialText), informedErrorMessage(this));
         verifyThat(field2.getText(), equalTo(emptyText), informedErrorMessage(this));
