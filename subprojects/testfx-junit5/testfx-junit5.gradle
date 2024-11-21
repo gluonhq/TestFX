@@ -21,7 +21,7 @@ ext.pomName = 'TestFX JUnit5'
 ext.pomDescription = 'TestFX JUnit5 library'
 ext.moduleName = 'org.testfx.junit5'
 ext.openjfxVersion = '23.0.1'
-ext.headlessSDKPath= "${System.properties['user.home']}${File.separator}Downloads${File.separator}javafx-sdk-24"
+ext.headlessSDKPath = System.getenv("JAVAFX_HOME")
 
 repositories {
     mavenCentral()

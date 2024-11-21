@@ -46,11 +46,11 @@ After following the README for the JavaFX Gradle Plugin you will end up with som
 
 ```gradle
 plugins {
-    id 'org.openjfx.javafxplugin' version '0.0.8'
+    id 'org.openjfx.javafxplugin' version '0.1.0'
 }
 
 javafx {
-    version = '12'
+    version = '23.0.1'
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 ```
@@ -86,7 +86,8 @@ dependencies {
 ```
 
 ### Matcher/Assertions Library
-Finally you must add a dependency corresponding to the matcher/assertions libraries that you want to use with TestFX. TestFX currently supports Hamcrest matchers or AssertJ assertions.
+
+Finally, you must add a dependency corresponding to the matcher/assertions libraries that you want to use with TestFX. TestFX currently supports Hamcrest matchers or AssertJ assertions.
 
 #### Hamcrest
 ```gradle
@@ -194,7 +195,7 @@ Next add a dependency corresponding to the testing framework you are using in yo
 ```
 
 ### Matcher/Assertions Library
-Finally you must add a dependency corresponding to the matcher/assertions libraries that you want to use with TestFX. TestFX currently supports Hamcrest matchers or AssertJ assertions.
+Finally, you must add a dependency corresponding to the matcher/assertions libraries that you want to use with TestFX. TestFX currently supports Hamcrest matchers or AssertJ assertions.
 
 #### Hamcrest
 ```xml
@@ -214,6 +215,33 @@ Finally you must add a dependency corresponding to the matcher/assertions librar
     <version>3.26.3</version>
     <scope>test</scope>
 </dependency>
+```
+
+## Headless Platform (Experimental)
+
+### Install
+
+Download the latest JavaFX SDK that includes the experimental headless platform from here:
+
+- Linux AArch64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_linux-aarch64_bin-sdk.zip)
+- Linux x86_64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_linux-x86_64_bin-sdk.zip)
+- macOS AArch64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_mac-aarch64_bin-sdk.zip)
+- macOS x86_64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_mac-x86_64_bin-sdk.zip)
+- Windows x86_64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_windows-x86_64_bin-sdk.zip)
+
+Then extract the zip file to a path of your convenience, and set the following environmental variable:
+
+```
+export JAVAFX_HOME=your.path.to/javafx-sdk-24
+```
+
+### Run TestFX tests
+
+With JDK 22+, you can run the set of tests included in TestFX in headless mode with:
+
+```
+export _JAVA_OPTIONS=-Dtestfx.headless=true
+sh gradlew test
 ```
 
 ## Examples
@@ -486,27 +514,6 @@ class ClickableButtonSpec extends ApplicationSpec {
         verifyThat('.button', hasText('clicked!'))
     }
 }
-```
-
-## Headless Platform
-
-### Install
-
-Download the latest SDK of the experimental headless platform from here:
-
-https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_linux-aarch64_bin-sdk.zip
-https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_linux-x86_64_bin-sdk.zip
-https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_mac-aarch64_bin-sdk.zip
-https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_mac-x86_64_bin-sdk.zip
-https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_windows-x86_64_bin-sdk.zip
-
-exaatract the zip file into ~/Downloads.
-
-### Run tests
-
-```
-export _JAVA_OPTIONS=-Dtestfx.headless=true
-sh gradlew test
 ```
 
 ## Chat
