@@ -35,6 +35,7 @@ afterEvaluate {
     dependencies {
         api project(":testfx-core")
 
+        compileOnly 'org.apiguardian:apiguardian-api:1.1.2'
         compileOnly 'org.junit.jupiter:junit-jupiter-api:5.11.3'
         testCompileOnly 'org.junit.jupiter:junit-jupiter-api:5.11.3'
         testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
@@ -53,24 +54,10 @@ afterEvaluate {
         }
     }
 
-//    javadoc {
-//        source = sourceSets.main.allJava
-//        //dependsOn compileModuleInfoJava
-//        if (JavaVersion.current().isJava9Compatible()) {
-//            options.addBooleanOption('html5', true)
-//
-//            inputs.property("moduleName", moduleName)
-//
-//            doFirst {
-//                options.addStringOption('-module-path', classpath.asPath)
-//                options.addMultilineStringsOption('-add-modules').setValue([
-//                        'javafx.graphics', 'javafx.controls', 'javafx.swing', 'org.hamcrest', 'org.testfx'])
-//                options.addMultilineStringsOption('-add-exports').setValue([
-//                        'javafx.graphics/com.sun.javafx.application=org.testfx',
-//                        'javafx.graphics/com.sun.glass.ui=org.testfx'])
-//            }
-//        }
-//    }
+    javadoc {
+        source = sourceSets.main.allJava
+        options.addBooleanOption('html5', true)
+    }
 
     test {
         useJUnitPlatform()

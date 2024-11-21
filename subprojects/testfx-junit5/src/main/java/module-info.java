@@ -20,6 +20,7 @@ module org.testfx.junit.jupiter {
 
     requires org.assertj.core;
     requires org.junit.jupiter.api;
+    requires static transitive org.apiguardian.api;
 
     exports org.testfx.framework.junit5;
     exports org.testfx.framework.junit5.utils;

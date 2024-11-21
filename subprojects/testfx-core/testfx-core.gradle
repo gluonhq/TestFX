@@ -55,57 +55,8 @@ dependencies {
     }
 }
 
-//    javadoc {
-//        source = sourceSets.main.allJava
-//        //dependsOn compileModuleInfoJava
-//        if (JavaVersion.current().isJava9Compatible()) {
-//            options.addBooleanOption('html5', true)
-//
-//            inputs.property("moduleName", moduleName)
-//
-//            doFirst {
-//                options.addStringOption('-module-path', classpath.asPath)
-//                options.addStringOption('-add-reads', "$moduleName=org.assertj.core")
-//                options.addMultilineStringsOption('-add-modules').setValue([
-//                        'javafx.graphics', 'javafx.controls', 'javafx.swing', 'org.hamcrest', 'org.assertj.core'])
-//                options.addMultilineStringsOption('-add-exports').setValue([
-//                        'javafx.graphics/com.sun.javafx.application=org.testfx',
-//                        'javafx.graphics/com.sun.glass.ui=org.testfx'])
-//            }
-//        }
-//    }
-
-//    test {
-//        if (JavaVersion.current().isJava9Compatible()) {
-//            inputs.property("moduleName", moduleName)
-//            doFirst {
-//                jvmArgs = [
-//                        '--module-path', classpath.asPath,
-//                        '--add-modules', 'ALL-MODULE-PATH',
-//                        '--add-exports', 'org.testfx/org.testfx.service.locator.impl=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.service.query.impl=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.service.finder.impl=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.service.adapter.impl=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.service.support.impl=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.robot.impl=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.toolkit.impl=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.cases=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.cases.acceptance=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.cases.integration=junit',
-//                        '--add-exports', 'org.testfx/org.testfx.cases.issue=junit',
-//                        '--add-reads', "$moduleName=junit",
-//                        '--add-reads', "$moduleName=javafx.fxml",
-//                        '--add-opens', "$moduleName/org.testfx.service.query.impl=org.testfx",
-//                        '--add-opens', "javafx.graphics/com.sun.glass.ui=$moduleName",
-//                        '--add-exports', "javafx.graphics/com.sun.glass.ui=$moduleName",
-//                        '--add-exports', "javafx.graphics/com.sun.javafx.application=$moduleName",
-//                        '--add-exports', 'javafx.graphics/com.sun.glass.ui=org.testfx.monocle',
-//                        '--add-exports', 'javafx.graphics/com.sun.javafx.application=org.testfx.monocle',
-//                        '--add-exports', 'javafx.graphics/com.sun.glass.ui.delegate=org.testfx.monocle',
-//                        '--patch-module', "$moduleName=" + files(sourceSets.test.java.destinationDirectory.asFile.get(), sourceSets.test.resources.srcDirs).asPath,
-//                ]
-//                classpath = files()
-//            }
-//        }
-//    }
+javadoc {
+    source = sourceSets.main.allJava
+    options.addBooleanOption('html5', true)
+}
 

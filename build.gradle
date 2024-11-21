@@ -172,7 +172,7 @@ evaluationDependsOnChildren()
 
 subprojects { subproject ->
     javadoc {
-        enabled = JavaVersion.current().isJava8()
+        enabled = true
         excludes = ["**/*.html", "META-INF/**"]
         classpath = configurations.runtimeClasspath + configurations.providedCompile + configurations.compileOnly
         configurations.compileOnly.setCanBeResolved(true)
