@@ -27,7 +27,6 @@ apply plugin: 'groovy'
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 groovydoc {

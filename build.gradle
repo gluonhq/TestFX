@@ -21,7 +21,6 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 buildscript {
     repositories {
         mavenCentral()
-        mavenLocal()
     }
 }
 
@@ -70,9 +69,9 @@ allprojects { project ->
     }
 
     repositories {
-//        if (project.hasProperty("useMavenLocal")) {
+        if (project.hasProperty("useMavenLocal")) {
             mavenLocal()
-//        }
+        }
     }
 
     sourceCompatibility = JavaVersion.VERSION_17

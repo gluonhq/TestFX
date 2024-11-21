@@ -24,7 +24,6 @@ ext.openjfxVersion = '23.0.1'
 
 repositories {
     mavenCentral()
-    mavenLocal()
 }
 
 javafx {
