@@ -42,5 +42,5 @@ license {
 
 // Decrease verbosity (printing that the header in each file is OK).
 [licenseMain, licenseTest].each { task ->
-    task.logging.setLevel(LogLevel.LIFECYCLE)
+    task.logging.captureStandardOutput LogLevel.LIFECYCLE
 }

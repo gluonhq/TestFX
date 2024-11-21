@@ -102,12 +102,14 @@ public class TextMatchersTest extends FxRobot {
     @Test
     public void hasFont_fails() {
         assumeThat("skipping: no testable fonts installed on system", fontFamily, is(notNullValue()));
-        assertThatThrownBy(() -> assertThat(quuxText, TextMatchers.hasFont(Font.font(fontFamily, 14))))
+        Font font = Font.font(fontFamily, 14);
+        String fontName = font.getName();
+        assertThatThrownBy(() -> assertThat(quuxText, TextMatchers.hasFont(font)))
                 .isExactlyInstanceOf(AssertionError.class)
                 .hasMessage(String.format("\nExpected: Text has font " +
-                        "\"%1$s\" with family (\"%1$s\") and size (%2$.1f)\n     " +
+                        "\"%1$s\" with family (\"%2$s\") and size (%3$.1f)\n     " +
                         "but: was Text with font: " +
-                        "\"%1$s\" with family (\"%1$s\") and size (%3$.1f)", fontFamily, 14.0, 16.0));
+                        "\"%1$s\" with family (\"%2$s\") and size (%4$.1f)", fontName, fontFamily, 14.0, 16.0));
     }
 
     @Test

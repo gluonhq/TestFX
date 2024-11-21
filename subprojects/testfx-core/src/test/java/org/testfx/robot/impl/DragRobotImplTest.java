@@ -32,8 +32,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class DragRobotImplTest {
 
@@ -59,7 +59,7 @@ public class DragRobotImplTest {
         // then:
         verify(mouseRobot, times(1)).press(eq(MouseButton.PRIMARY));
         verifyNoMoreInteractions(mouseRobot);
-        verifyZeroInteractions(moveRobot);
+        verifyNoInteractions(moveRobot);
     }
 
     @Test
@@ -88,7 +88,7 @@ public class DragRobotImplTest {
         // then:
         verify(mouseRobot, times(1)).release();
         verifyNoMoreInteractions(mouseRobot);
-        verifyZeroInteractions(moveRobot);
+        verifyNoInteractions(moveRobot);
     }
 
     @Test

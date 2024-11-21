@@ -34,8 +34,8 @@ import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.verifyZeroInteractions;
 
 public class ClickRobotImplTest {
 
@@ -64,7 +64,7 @@ public class ClickRobotImplTest {
         verify(mouseRobot, times(1)).pressNoWait(eq(MouseButton.PRIMARY));
         verify(mouseRobot, times(1)).release(eq(MouseButton.PRIMARY));
         verifyNoMoreInteractions(mouseRobot);
-        verifyZeroInteractions(moveRobot, sleepRobot);
+        verifyNoInteractions(moveRobot, sleepRobot);
     }
 
     @Test
@@ -80,7 +80,7 @@ public class ClickRobotImplTest {
             eq(MouseButton.PRIMARY), eq(MouseButton.SECONDARY)
         );
         verifyNoMoreInteractions(mouseRobot);
-        verifyZeroInteractions(moveRobot, sleepRobot);
+        verifyNoInteractions(moveRobot, sleepRobot);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class ClickRobotImplTest {
         verify(mouseRobot, times(1)).pressNoWait(eq(MouseButton.PRIMARY));
         verify(mouseRobot, times(1)).release(eq(MouseButton.PRIMARY));
         verifyNoMoreInteractions(moveRobot, mouseRobot);
-        verifyZeroInteractions(sleepRobot);
+        verifyNoInteractions(sleepRobot);
     }
 
     @Test
@@ -109,7 +109,7 @@ public class ClickRobotImplTest {
         verify(mouseRobot, times(2)).release(eq(MouseButton.PRIMARY));
         verify(sleepRobot, times(1)).sleep(anyLong());
         verifyNoMoreInteractions(mouseRobot, sleepRobot);
-        verifyZeroInteractions(moveRobot);
+        verifyNoInteractions(moveRobot);
     }
 
     @Test
@@ -126,7 +126,7 @@ public class ClickRobotImplTest {
         );
         verify(sleepRobot, times(1)).sleep(anyLong());
         verifyNoMoreInteractions(mouseRobot, sleepRobot);
-        verifyZeroInteractions(moveRobot);
+        verifyNoInteractions(moveRobot);
     }
 
     @Test

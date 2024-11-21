@@ -21,13 +21,15 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent
 buildscript {
     repositories {
         mavenCentral()
+        mavenLocal()
     }
 }
 
 plugins {
-    id 'com.github.hierynomus.license' version '0.15.0'
+    id 'com.github.hierynomus.license' version '0.16.1'
     id 'com.github.ben-manes.versions' version '0.29.0'
     id 'com.github.spotbugs' version '4.0.6'
+    id 'org.openjfx.javafxplugin' version '0.1.0' apply(false)
 }
 
 rootProject.with { project ->
@@ -50,16 +52,7 @@ rootProject.with { project ->
         buildDate = buildTimeAndDate.format("yyyy-MM-dd")
         buildTime = buildTimeAndDate.format("HH:mm:ss.SSSZ")
 
-        if (JavaVersion.current().isJava11Compatible()) {
-            javadocLinks = ["https://docs.oracle.com/en/java/javase/11/docs/api"]
-        } else if (JavaVersion.current().isJava10Compatible()) {
-            javadocLinks = ["https://docs.oracle.com/javase/10/docs/api"]
-        } else if (JavaVersion.current().isJava9Compatible()) {
-            javadocLinks = ["https://docs.oracle.com/javase/9/docs/api"]
-        } else {
-            javadocLinks = ["http://docs.oracle.com/javase/8/docs/api/",
-                            "http://docs.oracle.com/javase/8/javafx/api/"]
-        }
+        javadocLinks = ["https://docs.oracle.com/en/java/javase/21/docs/api"]
     }
 }
 
@@ -67,7 +60,7 @@ allprojects { project ->
     apply plugin: 'base'
     apply plugin: 'java'
     apply plugin: 'jacoco'
-    apply plugin: 'maven'
+    apply plugin: 'maven-publish'
     apply plugin: 'signing'
     apply from: "${rootDir}/gradle/jacoco.gradle"
     apply from: "${rootDir}/gradle/travis-helpers.gradle"
@@ -77,10 +70,13 @@ allprojects { project ->
     }
 
     repositories {
-        if (project.hasProperty("useMavenLocal")) {
+//        if (project.hasProperty("useMavenLocal")) {
             mavenLocal()
-        }
+//        }
     }
+
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 subprojects { subproject ->
@@ -96,25 +92,23 @@ subprojects { subproject ->
     task sourceJar(type: Jar) {
         group 'Build'
         description 'Assembles a JAR containing the source code.'
-        classifier 'sources'
+        archiveClassifier.set('sources')
         from sourceSets.main.allJava
     }
 
     task javadocJar(type: Jar) {
         group 'Build'
         description 'Assembles a JAR containing the Javadoc.'
-        classifier 'javadoc'
+        archiveClassifier.set('javadoc')
         from javadoc
     }
 
-    jar.finalizedBy createPom
     jar.finalizedBy sourceJar
     jar.finalizedBy javadocJar
 
     artifacts {
         sourceJar
         javadocJar
-        createPom
     }
 
     tasks.withType(JavaCompile) {
@@ -126,7 +120,7 @@ subprojects { subproject ->
     }
 
     test {
-        reports.html.enabled = false
+        reports.html.required = false
         testLogging {
             // set options for log level LIFECYCLE
             events TestLogEvent.STARTED, TestLogEvent.PASSED,
@@ -181,7 +175,8 @@ subprojects { subproject ->
     javadoc {
         enabled = JavaVersion.current().isJava8()
         excludes = ["**/*.html", "META-INF/**"]
-        classpath = configurations.compile + configurations.providedCompile + configurations.compileOnly
+        classpath = configurations.runtimeClasspath + configurations.providedCompile + configurations.compileOnly
+        configurations.compileOnly.setCanBeResolved(true)
         options.use         = true
         options.splitIndex  = true
         options.encoding    = "UTF-8"
@@ -233,29 +228,17 @@ task aggregateJavadoc(type: Javadoc) {
     }
 }
 
-task jacocoMerge(type: JacocoMerge) {
-    group = 'Coverage reports'
-    description = 'Merges individual JaCoCo coverage data in to a single data set.'
-    destinationFile = file("$buildDir/jacoco/jacoco-all.exec")
-    subprojects.each { subproject ->
-        executionData subproject.tasks.withType(Test)
-    }
-    doFirst {
-        executionData = files(executionData.findAll { it.exists() })
-    }
-}
-
 task jacocoRootReport(type: JacocoReport) {
     group = 'Coverage reports'
     description = 'Generates an aggregate JaCoCo coverage report containing the coverage data of each subproject.'
-    dependsOn subprojects.test, jacocoMerge
+    dependsOn subprojects.test
     getAdditionalSourceDirs().setFrom(files(subprojects.sourceSets.main.allSource.srcDirs))
     getSourceDirectories().setFrom(files(subprojects.sourceSets.main.allSource.srcDirs))
     getClassDirectories().setFrom(files(subprojects.sourceSets.main.output))
     getExecutionData().setFrom(files(subprojects.jacocoTestReport.executionData).filter { it.exists() })
 
     reports {
-        html.enabled = true
-        xml.enabled = true
+        html.required = true
+        xml.required = true
     }
 }

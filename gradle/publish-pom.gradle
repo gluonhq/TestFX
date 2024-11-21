@@ -15,81 +15,76 @@
  * specific language governing permissions and limitations under the Licence.
  */
 
-task createPom {
-	description 'Generate the artifact pom file for Maven Central'
-	doLast {
-		pom {
-			project {
-				name "${project.pomName}"
-				description "${project.pomDescription}"
-				inceptionYear '2013'
-				url "http://testfx.org/"
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
+			afterEvaluate {
+				artifact sourceJar
+				artifact javadocJar
+			}
+			description 'Generate the artifact pom file for Maven Central'
+			pom {
+				name = "${project.name}"
+				description = "${project.description}"
+				inceptionYear = '2013'
+				url = "http://testfx.org/"
 
 				licenses {
-					license([:]) {
-						name "European Union Public Licence, Version 1.1"
-						url "http://ec.europa.eu/idabc/eupl.html"
-						distribution "repo"
+					license {
+						name = "European Union Public Licence, Version 1.1"
+						url = "http://ec.europa.eu/idabc/eupl.html"
+						distribution = "repo"
 					}
 				}
 
 				scm {
-					url "https://github.com/TestFX/TestFX"
+					url = "https://github.com/TestFX/TestFX"
 				}
 
 				developers {
 					developer {
-						id "mvsoder"
-						name "Mark Soderquist"
-						url "https://github.com/mvsoder"
-						timezone "-7"
-						roles {
-							role "developer"
-						}
+						id = "mvsoder"
+						name = "Mark Soderquist"
+						url = "https://github.com/mvsoder"
+						timezone = "-7"
+						roles = ["developer"]
 					}
 
 					developer {
-						id "svenruppert"
-						name "Sven Ruppert"
-						url "https://github.com/svenruppert"
-						timezone "+1"
-						roles {
-							role "developer"
-						}
+						id = "svenruppert"
+						name = "Sven Ruppert"
+						url = "https://github.com/svenruppert"
+						timezone = "+1"
+						roles = ["developer"]
 					}
 
 					developer {
-						id "minisu"
-						name "Henrik Olsson"
-						url "https://github.com/minisu"
-						timezone "+1"
-						roles {
-							role "former developer"
-						}
+						id = "minisu"
+						name = "Henrik Olsson"
+						url = "https://github.com/minisu"
+						timezone = "+1"
+						roles = ["former developer"]
 					}
 
 					developer {
-						id "dainnilsson"
-						name "Dain Nilsson"
-						url "https://github.com/dainnilsson"
-						timezone "+1"
-						roles {
-							role "project founder"
-							role "former developer"
-						}
+						id = "dainnilsson"
+						name = "Dain Nilsson"
+						url = "https://github.com/dainnilsson"
+						timezone = "+1"
+						roles = ["project founder",  "former developer"]
 					}
 
 					developer {
-						id "hastebrot"
-						name "Benjamin Gudehus"
-						url "https://github.com/hastebrot"
-						timezone "+1"
-						roles {
-							role "project maintainer"
-						}
+						id = "hastebrot"
+						name = "Benjamin Gudehus"
+						url = " https://github.com/hastebrot"
+						timezone = "+1"
+						roles = ["project maintainer"]
 					}
 				}
 			}
-		}.writeTo("$buildDir/libs/${project.name}-${project.version}.pom")
+		}
+				//.writeTo("$buildDir/libs/${project.name}-${project.version}.pom")
 	}
 }

@@ -17,6 +17,7 @@
 package org.testfx.robot.impl;
 
 import java.util.concurrent.TimeoutException;
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -156,7 +157,8 @@ public class ShortcutKeyTest extends FxRobot {
         robotContext().getTypeRobot().push(new KeyCodeCombination(KeyCode.A, KeyCombination.SHORTCUT_DOWN));
         robotContext().getTypeRobot().push(new KeyCodeCombination(KeyCode.C, KeyCombination.SHORTCUT_DOWN));
         clickOn(field2, MouseButton.PRIMARY);
-        field2.requestFocus();
+        Platform.runLater(() -> field2.requestFocus());
+        WaitForAsyncUtils.waitForFxEvents();
         robotContext().getTypeRobot().push(new KeyCodeCombination(KeyCode.V, KeyCombination.SHORTCUT_DOWN));
 
         // then:
