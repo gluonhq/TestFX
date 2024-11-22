@@ -16,7 +16,6 @@
  */
 package org.testfx.toolkit.impl;
 
-import java.lang.reflect.Field;
 import javafx.application.Application;
 
 import org.testfx.toolkit.ApplicationLauncher;
@@ -34,30 +33,8 @@ public class ApplicationLauncherImpl implements ApplicationLauncher {
             if (Boolean.getBoolean("testfx.verbose")) {
                 System.out.println("testfx: headless mode requested");
             }
-            try {
-                assignHeadlessPlatform();
-            }
-            catch (ClassNotFoundException exception) {
-                throw new IllegalStateException("headless platform not found", exception);
-            }
-            catch (Exception exception) {
-                throw new RuntimeException(exception);
-            }
+            System.setProperty("glass.platform", "Headless");
         }
-    }
-
-    private void assignHeadlessPlatform() throws Exception {
-        Class<?> platformFactoryClass = Class.forName("com.sun.glass.ui.PlatformFactory");
-        Object platformFactoryImpl = Class.forName("com.sun.glass.ui.headless.HeadlessPlatformFactory")
-                .getDeclaredConstructor().newInstance();
-        assignPrivateStaticField(platformFactoryClass, "instance", platformFactoryImpl);
-    }
-
-    private void assignPrivateStaticField(Class<?> clazz, String name, Object value) throws Exception {
-        Field field = clazz.getDeclaredField(name);
-        field.setAccessible(true);
-        field.set(clazz, value);
-        field.setAccessible(false);
     }
 
 }
