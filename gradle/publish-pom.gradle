@@ -16,6 +16,18 @@
  */
 
 publishing {
+	repositories {
+		maven {
+			name 'gluonReleases'
+			def releasesRepoUrl = "https://nexus.gluonhq.com/nexus/content/repositories/releases/"
+			def snapshotsRepoUrl = "https://nexus.gluonhq.com/nexus/content/repositories/public-snapshots/"
+			url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+			credentials {
+				username = project.hasProperty('gluonNexusDeployUsername') ? project.property('gluonNexusDeployUsername') : ''
+				password = project.hasProperty('gluonNexusDeployPassword') ? project.property('gluonNexusDeployPassword') : ''
+			}
+		}
+	}
 	publications {
 		maven(MavenPublication) {
 			from components.java
@@ -83,8 +95,17 @@ publishing {
 						roles = ["project maintainer"]
 					}
 				}
+
+				withXml {
+					Node pomNode = asNode()
+					pomNode.dependencies.'*'.findAll() {
+						it.artifactId.text().startsWith('javafx')
+					}.each {
+						it.parent().remove(it)
+					}
+				}
+
 			}
 		}
-				//.writeTo("$buildDir/libs/${project.name}-${project.version}.pom")
 	}
 }

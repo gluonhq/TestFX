@@ -38,6 +38,16 @@ dependencies {
     testCompile "org.testfx:testfx-core:4.0.19-gluon-SNAPSHOT"
 }
 ```
+and include the repository:
+
+```gradle
+    repositories {
+        maven() {
+            url "https://nexus.gluonhq.com/nexus/content/repositories/public-snapshots"
+        }
+    }
+
+```
 
 ### JavaFX
 The easiest way to add the JavaFX libraries to your Gradle project is to use the [JavaFX Gradle Plugin](https://github.com/openjfx/javafx-gradle-plugin).
@@ -101,7 +111,7 @@ testCompile group: 'org.assertj', name: 'assertj-core', version: '3.26.3'
 
 ## Maven
 
-To add a dependency on TestFX using Maven, use the following:
+To add a dependency on TestFX using Maven, use the following in your pom:
 
 ```xml
 <dependency>
@@ -110,6 +120,17 @@ To add a dependency on TestFX using Maven, use the following:
     <version>4.0.19-gluon-SNAPSHOT</version>
     <scope>test</scope>
 </dependency>
+```
+
+and include the repository:
+
+```xml
+<repositories>
+    <repository>
+        <id>Gluon Snapshots</id>
+        <url>https://nexus.gluonhq.com/nexus/content/repositories/public-snapshots/</url>
+    </repository>
+</repositories>
 ```
 
 ### JavaFX
