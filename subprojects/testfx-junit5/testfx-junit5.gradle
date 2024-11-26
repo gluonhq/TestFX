@@ -61,6 +61,8 @@ afterEvaluate {
 
     test {
         useJUnitPlatform()
+        systemProperty 'testfx.headless', System.getProperty('testfx.headless', "false")
+        systemProperty 'testfx.verbose', System.getProperty('testfx.verbose', "false")
     }
 
 }
