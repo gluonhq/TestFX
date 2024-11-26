@@ -39,7 +39,8 @@ public class WriteRobotImpl implements WriteRobot {
         }
         catch (NumberFormatException e) {
             System.err.println("\"testfx.robot.write_sleep\" property must be a number but was: \"" +
-                    System.getProperty("testfx.robot.write_sleep") + "\".\nUsing default of \"25\" milliseconds.");
+                    System.getProperty("testfx.robot.write_sleep") + "\"." +
+                    System.lineSeparator() + "Using default of \"25\" milliseconds.");
             e.printStackTrace();
             writeSleep = 25;
         }

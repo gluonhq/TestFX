@@ -123,9 +123,11 @@ public class TextFlowMatchers {
                         String textColor = fill.toString().substring(2, 8);
                         if (!ColorUtils.getNamedColor((Color) fill).isPresent()) {
                             return "impossible to exactly match TextFlow containing colored text: \"" +
-                                    ((Text) child).getText() + "\" which has color: \"#" + textColor + "\".\n" +
+                                    ((Text) child).getText() + "\" which has color: \"#" + textColor + "\"." +
+                                    System.lineSeparator() +
                                     "This is not a named color. The closest named color is: \"" +
-                                    ColorUtils.getClosestNamedColor(Integer.parseInt(textColor, 16)) + "\".\nSee: " +
+                                    ColorUtils.getClosestNamedColor(Integer.parseInt(textColor, 16)) + "\"." +
+                                    System.lineSeparator() + "See: " +
                                     "https://docs.oracle.com/javase/9/docs/api/javafx/scene/doc-files" +
                                     "/cssref.html#typecolor";
                         }

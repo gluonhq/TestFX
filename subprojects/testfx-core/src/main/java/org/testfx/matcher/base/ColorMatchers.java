@@ -62,7 +62,8 @@ public class ColorMatchers {
      */
     public static Matcher<Color> isColor(String namedColor) {
         if (!ColorUtils.getNamedColor(namedColor).isPresent()) {
-            throw new AssertionError("given color name: \"" + namedColor + "\" is not a named color\n" +
+            throw new AssertionError("given color name: \"" + namedColor + "\" is not a named color" +
+                    System.lineSeparator() +
                     "See: https://docs.oracle.com/javase/9/docs/api/javafx/scene/doc-files/cssref.html#typecolor");
         }
         String descriptionText = "is \"" + namedColor + "\"";
@@ -82,7 +83,7 @@ public class ColorMatchers {
                 namedColor.toString().substring(2, 8), 16));
         if (!namedColorOptional.isPresent()) {
             throw new AssertionError("given color: \"#" + namedColor.toString().substring(2, 8) +
-                    "\" is not a named color\n" +
+                    "\" is not a named color" + System.lineSeparator() +
                     "See: https://docs.oracle.com/javase/9/docs/api/javafx/scene/doc-files/cssref.html#typecolor");
         }
         String descriptionText = "has closest named color " + getColorText(namedColor);
@@ -102,7 +103,8 @@ public class ColorMatchers {
     public static Matcher<Color> hasClosestNamedColor(String namedColor) {
         Optional<Color> namedColorOptional = ColorUtils.getNamedColor(namedColor);
         if (!namedColorOptional.isPresent()) {
-            throw new AssertionError("given color name: \"" + namedColor + "\" is not a named color\n" +
+            throw new AssertionError("given color name: \"" + namedColor + "\" is not a named color" +
+                    System.lineSeparator() +
                     "See: https://docs.oracle.com/javase/9/docs/api/javafx/scene/doc-files/cssref.html#typecolor");
         }
         String descriptionText = "has closest named color " + getColorText(namedColorOptional.get());

@@ -56,7 +56,7 @@ public class LabeledAssertTest extends FxRobot {
     public void hasText_fails() {
         assertThatThrownBy(() -> assertThat(quuxButton).hasText("foobar"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: Labeled has text \"foobar\"\n     " +
+                .hasMessage("Expected: Labeled has text \"foobar\"" + System.lineSeparator() + "     " +
                         "but: was \"quux\"");
     }
 
@@ -69,7 +69,7 @@ public class LabeledAssertTest extends FxRobot {
     public void doesNotHaveText_fails() {
         assertThatThrownBy(() -> assertThat(foobarButton).doesNotHaveText("foobar"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: Labeled has text \"foobar\" to be false\n     " +
+                .hasMessage("Expected: Labeled has text \"foobar\" to be false" + System.lineSeparator() + "     " +
                         "but: was \"foobar\"");
     }
 
@@ -82,7 +82,7 @@ public class LabeledAssertTest extends FxRobot {
     public void hasText_matcher_fails() {
         assertThatThrownBy(() -> assertThat(quuxButton).hasText(endsWith("bar")))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: Labeled has a string ending with \"bar\"\n     " +
+                .hasMessage("Expected: Labeled has a string ending with \"bar\"" + System.lineSeparator() + "     " +
                         "but: was \"quux\"");
     }
 
@@ -95,7 +95,7 @@ public class LabeledAssertTest extends FxRobot {
     public void doesNotHaveText_matcher_fails() {
         assertThatThrownBy(() -> assertThat(foobarButton).doesNotHaveText(startsWith("foo")))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: Labeled has a string starting with \"foo\" to be false\n     " +
-                        "but: was \"foobar\"");
+                .hasMessage("Expected: Labeled has a string starting with \"foo\" to be false" +
+                        System.lineSeparator() + "     but: was \"foobar\"");
     }
 }

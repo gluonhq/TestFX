@@ -74,7 +74,7 @@ public class NodeAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(button).doesNotHaveText("foo"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: Labeled has text \"foo\" to be false\n     " +
+                .hasMessage("Expected: Labeled has text \"foo\" to be false" + System.lineSeparator() + "     " +
                         "but: was \"foo\"");
     }
 
@@ -110,7 +110,7 @@ public class NodeAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(textField).isFocused())
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessageStartingWith("Expected: Node has focus\n");
+                .hasMessageStartingWith("Expected: Node has focus" + System.lineSeparator());
     }
 
     @Test
@@ -144,7 +144,7 @@ public class NodeAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(textField).isNotFocused())
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessageStartingWith("Expected: Node does not have focus\n");
+                .hasMessageStartingWith("Expected: Node does not have focus" + System.lineSeparator());
     }
 
     @Test
@@ -184,7 +184,7 @@ public class NodeAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(parent).hasChild(".button"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessageStartingWith("Expected: Node has child \".button\"\n");
+                .hasMessageStartingWith("Expected: Node has child \".button\"" + System.lineSeparator());
     }
 
     @Test
@@ -206,7 +206,7 @@ public class NodeAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(parent).doesNotHaveChild(".button"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessageStartingWith("Expected: Node has child \".button\" to be false\n");
+                .hasMessageStartingWith("Expected: Node has child \".button\" to be false" + System.lineSeparator());
     }
 
     @Test
@@ -227,6 +227,6 @@ public class NodeAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(parent).hasExactlyChildren(2, ".button"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessageStartingWith("Expected: Node has 2 children \".button\"\n");
+                .hasMessageStartingWith("Expected: Node has 2 children \".button\"" + System.lineSeparator());
     }
 }

@@ -56,7 +56,7 @@ public class TextInputControlAssertTest extends FxRobot {
     public void hasText_fails() {
         assertThatThrownBy(() -> assertThat(quuxTextField).hasText("foobar"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TextInputControl has text \"foobar\"\n     " +
+                .hasMessage("Expected: TextInputControl has text \"foobar\"" + System.lineSeparator() + "     " +
                         "but: was TextField with text: \"quux\"");
     }
 
@@ -69,8 +69,8 @@ public class TextInputControlAssertTest extends FxRobot {
     public void doesNotHaveText_fails() {
         assertThatThrownBy(() -> assertThat(foobarTextField).doesNotHaveText("foobar"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TextInputControl has text \"foobar\" to be false\n     " +
-                        "but: was TextField with text: \"foobar\"");
+                .hasMessage("Expected: TextInputControl has text \"foobar\" to be false" + System.lineSeparator() +
+                        "     but: was TextField with text: \"foobar\"");
     }
 
     @Test
@@ -82,8 +82,8 @@ public class TextInputControlAssertTest extends FxRobot {
     public void hasText_matcher_fails() {
         assertThatThrownBy(() -> assertThat(quuxTextField).hasText(endsWith("bar")))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TextInputControl has a string ending with \"bar\"\n     " +
-                        "but: was TextField with text: \"quux\"");
+                .hasMessage("Expected: TextInputControl has a string ending with \"bar\"" + System.lineSeparator() +
+                        "     but: was TextField with text: \"quux\"");
     }
 
     @Test
@@ -95,7 +95,7 @@ public class TextInputControlAssertTest extends FxRobot {
     public void doesNotHaveText_matcher_fails() {
         assertThatThrownBy(() -> assertThat(foobarTextField).doesNotHaveText(endsWith("bar")))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TextInputControl has a string ending with \"bar\" to be false\n     " +
-                        "but: was TextField with text: \"foobar\"");
+                .hasMessage("Expected: TextInputControl has a string ending with \"bar\" to be false" +
+                        System.lineSeparator() + "     but: was TextField with text: \"foobar\"");
     }
 }

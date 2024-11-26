@@ -561,12 +561,13 @@ public final class WaitForAsyncUtils {
 
     private static void printException(Throwable e, StackTraceElement[] trace) {
         StringBuilder out = new StringBuilder("--- Exception in Async Thread ---\n");
-        out.append(e.getClass().getName()).append(": ").append(e.getMessage()).append('\n');
+        out.append(e.getClass().getName()).append(": ").append(e.getMessage()).append(System.lineSeparator());
         StackTraceElement[] st = e.getStackTrace();
         out.append(printTrace(st));
         Throwable cause = e.getCause();
         while (cause != null) {
-            out.append(cause.getClass().getName()).append(": ").append(cause.getMessage()).append('\n');
+            out.append(cause.getClass().getName()).append(": ").append(cause.getMessage())
+                    .append(System.lineSeparator());
             st = cause.getStackTrace();
             out.append(printTrace(st));
             cause = cause.getCause();

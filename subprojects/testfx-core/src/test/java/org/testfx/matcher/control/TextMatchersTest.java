@@ -75,8 +75,8 @@ public class TextMatchersTest extends FxRobot {
     public void hasText_fails() {
         assertThatThrownBy(() -> assertThat(quuxText, TextMatchers.hasText("foobar")))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: Text has text \"foobar\"\n     " +
-                        "but: was Text with text: \"quux\"");
+                .hasMessage(System.lineSeparator() + "Expected: Text has text \"foobar\"" + System.lineSeparator() +
+                        "     but: was Text with text: \"quux\"");
     }
 
     @Test
@@ -88,8 +88,8 @@ public class TextMatchersTest extends FxRobot {
     public void hasText_matcher_fails() {
         assertThatThrownBy(() -> assertThat(quuxText, TextMatchers.hasText(endsWith("bar"))))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: Text has a string ending with \"bar\"\n     " +
-                        "but: was Text with text: \"quux\"");
+                .hasMessage(System.lineSeparator() + "Expected: Text has a string ending with \"bar\"" +
+                        System.lineSeparator() + "     but: was Text with text: \"quux\"");
     }
 
     @Test
@@ -106,8 +106,8 @@ public class TextMatchersTest extends FxRobot {
         String fontName = font.getName();
         assertThatThrownBy(() -> assertThat(quuxText, TextMatchers.hasFont(font)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage(String.format("\nExpected: Text has font " +
-                        "\"%1$s\" with family (\"%2$s\") and size (%3$.1f)\n     " +
+                .hasMessage(String.format(System.lineSeparator() + "Expected: Text has font " +
+                        "\"%1$s\" with family (\"%2$s\") and size (%3$.1f)" + System.lineSeparator() + "     " +
                         "but: was Text with font: " +
                         "\"%1$s\" with family (\"%2$s\") and size (%4$.1f)", fontName, fontFamily, 14.0, 16.0));
     }
@@ -122,8 +122,8 @@ public class TextMatchersTest extends FxRobot {
     public void hasFontSmoothingType_fails() {
         assertThatThrownBy(() -> assertThat(foobarText, TextMatchers.hasFontSmoothingType(FontSmoothingType.LCD)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: Text has font smoothing type: \"LCD\"\n     " +
-                        "but: was Text with font smoothing type: \"GRAY\"");
+                .hasMessage(System.lineSeparator() + "Expected: Text has font smoothing type: \"LCD\"" +
+                        System.lineSeparator() + "     but: was Text with font smoothing type: \"GRAY\"");
     }
 
     @Test
@@ -135,8 +135,8 @@ public class TextMatchersTest extends FxRobot {
     public void hasStrikethrough_fails() {
         assertThatThrownBy(() -> assertThat(quuxText, TextMatchers.hasStrikethrough(true)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: Text has strikethrough\n     " +
-                        "but: was Text without strikethrough");
+                .hasMessage(System.lineSeparator() + "Expected: Text has strikethrough" + System.lineSeparator() +
+                        "     but: was Text without strikethrough");
     }
 
     @Test
@@ -148,8 +148,8 @@ public class TextMatchersTest extends FxRobot {
     public void isUnderlined_fails() {
         assertThatThrownBy(() -> assertThat(foobarText, TextMatchers.isUnderlined(true)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: Text is underlined\n     " +
-                        "but: was Text without underline");
+                .hasMessage(System.lineSeparator() + "Expected: Text is underlined" + System.lineSeparator() +
+                        "     but: was Text without underline");
     }
 
     private static void findFontFamily() {

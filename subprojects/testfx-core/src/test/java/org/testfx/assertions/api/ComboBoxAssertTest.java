@@ -59,7 +59,7 @@ public class ComboBoxAssertTest extends FxRobot {
     public void hasExactlyNumItems_fails() {
         assertThatThrownBy(() -> assertThat(comboBox).hasExactlyNumItems(3))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: ComboBox has exactly 3 items\n     " +
+                .hasMessage("Expected: ComboBox has exactly 3 items" + System.lineSeparator() + "     " +
                         "but: was 4");
     }
 
@@ -72,7 +72,7 @@ public class ComboBoxAssertTest extends FxRobot {
     public void doesNotHaveExactlyNumItems_fails() {
         assertThatThrownBy(() -> assertThat(comboBox).doesNotHaveExactlyNumItems(4))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: ComboBox has exactly 4 items to be false\n     " +
+                .hasMessage("Expected: ComboBox has exactly 4 items to be false" + System.lineSeparator() + "     " +
                         "but: was 4");
     }
 
@@ -94,7 +94,7 @@ public class ComboBoxAssertTest extends FxRobot {
     public void hasSelectedItem_fails() {
         assertThatThrownBy(() -> assertThat(comboBox).hasSelectedItem("bob"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: ComboBox has selection \"bob\"\n     " +
+                .hasMessage("Expected: ComboBox has selection \"bob\"" + System.lineSeparator() + "     " +
                         "but: was \"alice\"");
     }
 
@@ -107,8 +107,8 @@ public class ComboBoxAssertTest extends FxRobot {
     public void doesNotHaveSelectedItem_fails() {
         assertThatThrownBy(() -> assertThat(comboBox).doesNotHaveSelectedItem("alice"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: ComboBox has selection \"alice\" to be false\n     " +
-                        "but: was \"alice\"");
+                .hasMessage("Expected: ComboBox has selection \"alice\" to be false" + System.lineSeparator() +
+                        "     but: was \"alice\"");
     }
 
     @Test
@@ -125,7 +125,7 @@ public class ComboBoxAssertTest extends FxRobot {
     public void containsItems_fails() {
         assertThatThrownBy(() -> assertThat(comboBox).containsItems("alice", "bob", "eric"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: ComboBox contains items [alice, bob, eric]\n" +
+                .hasMessage("Expected: ComboBox contains items [alice, bob, eric]" + System.lineSeparator() +
                         "     but: was [alice, bob, carol, dave]");
     }
 
@@ -142,7 +142,7 @@ public class ComboBoxAssertTest extends FxRobot {
         // missing "dave", so should fail
         assertThatThrownBy(() -> assertThat(comboBox).containsExactlyItems("alice", "bob", "carol"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: ComboBox contains exactly items [alice, bob, carol]\n" +
+                .hasMessage("Expected: ComboBox contains exactly items [alice, bob, carol]" + System.lineSeparator() +
                         "     but: was [alice, bob, carol, dave]");
     }
 
@@ -158,7 +158,7 @@ public class ComboBoxAssertTest extends FxRobot {
     public void containsItemsInOrder_fails() {
         assertThatThrownBy(() -> assertThat(comboBox).containsItemsInOrder("alice", "carol", "bob"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: ComboBox contains items in order [alice, carol, bob]\n" +
+                .hasMessage("Expected: ComboBox contains items in order [alice, carol, bob]" + System.lineSeparator() +
                         "     but: was [alice, bob, carol, dave]");
     }
 
@@ -173,8 +173,8 @@ public class ComboBoxAssertTest extends FxRobot {
         // not in correct order, should fail
         assertThatThrownBy(() -> assertThat(comboBox).containsExactlyItemsInOrder("bob", "alice", "dave", "carol"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: ComboBox contains exactly items in order [bob, alice, dave, carol]\n" +
-                        "     but: was [alice, bob, carol, dave]");
+                .hasMessage("Expected: ComboBox contains exactly items in order [bob, alice, dave, carol]" +
+                        System.lineSeparator() + "     but: was [alice, bob, carol, dave]");
     }
 
 }

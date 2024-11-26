@@ -66,7 +66,8 @@ public class Adapter {
         matcher.describeTo(reasonDescription);
         errorMessageBuilder.append(reasonDescription.toString())
                 .append(invert ? " to be false" : "")
-                .append("\n     but: ")
+                .append(System.lineSeparator())
+                .append("     but: ")
                 .append(getActual(matcher, actual));
         return errorMessageBuilder.toString();
     }

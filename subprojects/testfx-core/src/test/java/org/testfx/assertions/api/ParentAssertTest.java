@@ -53,7 +53,7 @@ public class ParentAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(parent).hasAnyChild())
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: Parent has at least one child\n     " +
+                .hasMessage("Expected: Parent has at least one child" + System.lineSeparator() + "     " +
                         "but: was empty (contained no children)");
     }
 
@@ -74,7 +74,7 @@ public class ParentAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(stackPane).hasNoChildren())
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: Parent has at least one child to be false\n     " +
+                .hasMessage("Expected: Parent has at least one child to be false" + System.lineSeparator() + "     " +
                         "but: was [Button] (which has 1 child)");
     }
 
@@ -96,7 +96,7 @@ public class ParentAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(stackPane).hasExactlyNumChildren(3))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: Parent has exactly 3 children\n     " +
+                .hasMessage("Expected: Parent has exactly 3 children" + System.lineSeparator() + "     " +
                         "but: was [Label, Button] (which has 2 children)");
     }
 
@@ -119,7 +119,7 @@ public class ParentAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(stackPane).doesNotHaveExactlyNumChildren(2))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: Parent has exactly 2 children to be false\n     " +
+                .hasMessage("Expected: Parent has exactly 2 children to be false" + System.lineSeparator() + "     " +
                         "but: was [Label, Button] (which has 2 children)");
     }
 }

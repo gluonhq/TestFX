@@ -41,7 +41,8 @@ public class GeometryMatchersTest extends FxRobot {
     public void hasDimension_fails() {
         assertThatThrownBy(() -> assertThat(new Dimension2D(10, 20), GeometryMatchers.hasDimension(0, 0)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessageStartingWith("\nExpected: Dimension2D has dimension (0.0, 0.0)\n");
+                .hasMessageStartingWith(System.lineSeparator() +
+                        "Expected: Dimension2D has dimension (0.0, 0.0)" + System.lineSeparator());
     }
 
 }

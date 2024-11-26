@@ -132,8 +132,9 @@ public class TableViewMatchersTest extends FxRobot {
     public void hasTableCell_fails() {
         assertThatThrownBy(() -> assertThat(tableView, TableViewMatchers.hasTableCell("foobar")))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: TableView has table cell \"foobar\"\n     " +
-                        "but: was [[alice, 30, null], [bob, 31, null], [carol, null, null], [dave, null, null]]");
+                .hasMessage(System.lineSeparator() + "Expected: TableView has table cell \"foobar\"" +
+                        System.lineSeparator() +
+                        "     but: was [[alice, 30, null], [bob, 31, null], [carol, null, null], [dave, null, null]]");
     }
 
     @Test
@@ -160,7 +161,8 @@ public class TableViewMatchersTest extends FxRobot {
         // "but: was [[ALICE!, 30], [BOB!, 31], [CAROL!, null], [DAVE!, null]]");
         assertThatThrownBy(() -> assertThat(tableView, TableViewMatchers.hasTableCell("ALICE!!!")))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessageStartingWith("\nExpected: TableView has table cell \"ALICE!!!\"\n     ");
+                .hasMessageStartingWith(System.lineSeparator() +
+                        "Expected: TableView has table cell \"ALICE!!!\"" + System.lineSeparator() + "     ");
     }
 
     @Test
@@ -195,8 +197,8 @@ public class TableViewMatchersTest extends FxRobot {
     public void hasNumRows_fails() {
         assertThatThrownBy(() -> assertThat(tableView, TableViewMatchers.hasNumRows(0)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: TableView has 0 rows\n     " +
-                        "but: was contained 4 rows");
+                .hasMessage(System.lineSeparator() + "Expected: TableView has 0 rows" + System.lineSeparator() +
+                        "     but: was contained 4 rows");
     }
 
     @Test
@@ -264,32 +266,33 @@ public class TableViewMatchersTest extends FxRobot {
     public void containsRowAtIndex_no_such_row_fails() {
         assertThatThrownBy(() -> assertThat(tableView, TableViewMatchers.containsRowAtIndex(0, "jerry", 29, null)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: TableView has row: [jerry, 29, null] at index 0\n     " +
-                        "but: was [alice, 30, null] at index: 0");
+                .hasMessage(System.lineSeparator() + "Expected: TableView has row: [jerry, 29, null] at index 0" +
+                        System.lineSeparator() + "     but: was [alice, 30, null] at index: 0");
     }
 
     @Test
     public void containsRowAtIndex_out_of_bounds_fails() {
         assertThatThrownBy(() -> assertThat(tableView, TableViewMatchers.containsRowAtIndex(4, "tom", 54)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: TableView has row: [tom, 54] at index 4\n     " +
-                        "but: was given out-of-bounds row index: 4 (table only has 4 rows)");
+                .hasMessage(System.lineSeparator() + "Expected: TableView has row: [tom, 54] at index 4" +
+                        System.lineSeparator() +
+                        "     but: was given out-of-bounds row index: 4 (table only has 4 rows)");
     }
 
     @Test
     public void containsRowAtNegativeIndex_fails() {
         assertThatThrownBy(() -> assertThat(tableView, TableViewMatchers.containsRowAtIndex(-1, "alice", 30)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: TableView has row: [alice, 30] at index -1\n     " +
-                        "but: was given negative row index: -1");
+                .hasMessage(System.lineSeparator() + "Expected: TableView has row: [alice, 30] at index -1" +
+                        System.lineSeparator() + "     but: was given negative row index: -1");
     }
 
     @Test
     public void containsRowAtIndex_wrong_types_fails() {
         assertThatThrownBy(() -> assertThat(tableView, TableViewMatchers.containsRowAtIndex(1, 63, "deedee", null)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: TableView has row: [63, deedee, null] at index 1\n     " +
-                        "but: was [bob, 31, null] at index: 1");
+                .hasMessage(System.lineSeparator() + "Expected: TableView has row: [63, deedee, null] at index 1" +
+                        System.lineSeparator() + "     but: was [bob, 31, null] at index: 1");
     }
 
     @Test
@@ -373,7 +376,8 @@ public class TableViewMatchersTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(tableView, TableViewMatchers.containsRow("jerry", 29, null)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: TableView has row: [jerry, 29, null]\n     " +
+                .hasMessage(System.lineSeparator() + "Expected: TableView has row: [jerry, 29, null]" +
+                        System.lineSeparator() + "     " +
                         "but: was [[alice, 30, null], [bob, 31, null], [carol, null, null], [dave, null, null]]");
     }
 
@@ -400,7 +404,8 @@ public class TableViewMatchersTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(tableView, TableViewMatchers.containsRow(63, "deedee", null)))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("\nExpected: TableView has row: [63, deedee, null]\n     " +
+                .hasMessage(System.lineSeparator() + "Expected: TableView has row: [63, deedee, null]" +
+                        System.lineSeparator() + "     " +
                         "but: was [[alice, 30, null], [bob, 31, null], [carol, null, null], [dave, null, null]]");
     }
 

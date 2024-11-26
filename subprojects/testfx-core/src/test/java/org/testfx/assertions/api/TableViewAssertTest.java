@@ -112,7 +112,7 @@ public class TableViewAssertTest extends FxRobot {
     public void hasTableCell_fails() {
         assertThatThrownBy(() -> assertThat(tableView).hasTableCell("foobar"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has table cell \"foobar\"\n     " +
+                .hasMessage("Expected: TableView has table cell \"foobar\"" + System.lineSeparator() + "     " +
                         "but: was [[alice, 30], [bob, 31], [carol, null], [dave, null]]");
     }
 
@@ -137,7 +137,8 @@ public class TableViewAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(tableView).hasTableCell("ALICE!!!"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessageStartingWith("Expected: TableView has table cell \"ALICE!!!\"\n     ");
+                .hasMessageStartingWith("Expected: TableView has table cell \"ALICE!!!\"" +
+                        System.lineSeparator() + "     ");
         // FIXME(mike): Currently the table is printed without applying the cell value factory
         // once that is fixed, add these lines:
         // "but: was [[ALICE!, 30], [BOB!, 31], [CAROL!, null], [DAVE!, null]]");
@@ -160,7 +161,7 @@ public class TableViewAssertTest extends FxRobot {
         // FIXME: This works but it is nonsensical - why can't we accept null?
         assertThatThrownBy(() -> assertThat(tableView).hasTableCell(null))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has table cell \"null\"\n     " +
+                .hasMessage("Expected: TableView has table cell \"null\"" + System.lineSeparator() + "     " +
                         "but: was [[alice, 30], [bob, 31], [carol, null], [dave, null]]");
     }
 
@@ -190,8 +191,8 @@ public class TableViewAssertTest extends FxRobot {
     public void doesNotHaveTableCell_fails() {
         assertThatThrownBy(() -> assertThat(tableView).doesNotHaveTableCell("alice"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has table cell \"alice\" to be false\n     " +
-                        "but: was [[alice, 30], [bob, 31], [carol, null], [dave, null]]");
+                .hasMessage("Expected: TableView has table cell \"alice\" to be false" + System.lineSeparator() +
+                        "     but: was [[alice, 30], [bob, 31], [carol, null], [dave, null]]");
     }
 
     @Test
@@ -209,7 +210,7 @@ public class TableViewAssertTest extends FxRobot {
     public void hasExactlyNumRows_fails() {
         assertThatThrownBy(() -> assertThat(tableView).hasExactlyNumRows(0))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has 0 rows\n     " +
+                .hasMessage("Expected: TableView has 0 rows" + System.lineSeparator() + "     " +
                         "but: was contained 4 rows");
     }
 
@@ -222,7 +223,7 @@ public class TableViewAssertTest extends FxRobot {
     public void doesNotHaveExactlyNumRows_fails() {
         assertThatThrownBy(() -> assertThat(tableView).doesNotHaveExactlyNumRows(4))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has 4 rows to be false\n     " +
+                .hasMessage("Expected: TableView has 4 rows to be false" + System.lineSeparator() + "     " +
                         "but: was contained 4 rows");
     }
 
@@ -286,7 +287,7 @@ public class TableViewAssertTest extends FxRobot {
     public void containsRowAtIndex_no_such_row_fails() {
         assertThatThrownBy(() -> assertThat(tableView).containsRowAtIndex(0, "jerry", 29))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has row: [jerry, 29] at index 0\n     " +
+                .hasMessage("Expected: TableView has row: [jerry, 29] at index 0" + System.lineSeparator() + "     " +
                         "but: was [alice, 30] at index: 0");
     }
 
@@ -294,7 +295,7 @@ public class TableViewAssertTest extends FxRobot {
     public void containsRowAtIndex_out_of_bounds_fails() {
         assertThatThrownBy(() -> assertThat(tableView).containsRowAtIndex(4, "tom", 54))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has row: [tom, 54] at index 4\n     " +
+                .hasMessage("Expected: TableView has row: [tom, 54] at index 4" + System.lineSeparator() + "     " +
                         "but: was given out-of-bounds row index: 4 (table only has 4 rows)");
     }
 
@@ -302,7 +303,7 @@ public class TableViewAssertTest extends FxRobot {
     public void containsRowAtNegativeIndex_fails() {
         assertThatThrownBy(() -> assertThat(tableView).containsRowAtIndex(-1, "alice", 30))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has row: [alice, 30] at index -1\n     " +
+                .hasMessage("Expected: TableView has row: [alice, 30] at index -1" + System.lineSeparator() + "     " +
                         "but: was given negative row index: -1");
     }
 
@@ -310,7 +311,7 @@ public class TableViewAssertTest extends FxRobot {
     public void containsRowAtIndex_wrong_types_fails() {
         assertThatThrownBy(() -> assertThat(tableView).containsRowAtIndex(1, 63, "deedee"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has row: [63, deedee] at index 1\n     " +
+                .hasMessage("Expected: TableView has row: [63, deedee] at index 1" + System.lineSeparator() + "     " +
                         "but: was [bob, 31] at index: 1");
     }
 
@@ -395,8 +396,8 @@ public class TableViewAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(tableView).doesNotContainRowAtIndex(0, "alice", 30))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has row: [alice, 30] at index 0 to be false\n     " +
-                        "but: was [alice, 30] at index: 0");
+                .hasMessage("Expected: TableView has row: [alice, 30] at index 0 to be false" + System.lineSeparator() +
+                        "     but: was [alice, 30] at index: 0");
     }
 
     @Test
@@ -478,7 +479,7 @@ public class TableViewAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(tableView).containsRow("jerry", 29))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has row: [jerry, 29]\n     " +
+                .hasMessage("Expected: TableView has row: [jerry, 29]" + System.lineSeparator() + "     " +
                         "but: was [[alice, 30], [bob, 31], [carol, null], [dave, null]]");
     }
 
@@ -505,7 +506,7 @@ public class TableViewAssertTest extends FxRobot {
         // then:
         assertThatThrownBy(() -> assertThat(tableView).containsRow(63, "deedee"))
                 .isExactlyInstanceOf(AssertionError.class)
-                .hasMessage("Expected: TableView has row: [63, deedee]\n     " +
+                .hasMessage("Expected: TableView has row: [63, deedee]" + System.lineSeparator() + "     " +
                         "but: was [[alice, 30], [bob, 31], [carol, null], [dave, null]]");
     }
 
