@@ -2,18 +2,10 @@
 name: Build
 
 on:
-  workflow_dispatch:
-  workflow_call:
-    inputs:
-      os:
-        required: true
-        type: string
-      jdk:
-        required: true
-        type: string
-      openjfx:
-        required: true
-        type: string
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
 permissions:
   actions: read
@@ -25,53 +17,111 @@ permissions:
   statuses: read
   security-events: write
 
-env:
-  DISPLAY: ":99"
-  XVFB_PARMS: "-screen 0 1920x1080x24 -nolisten unix"
-  OPENJFX_VERSION: "${{ inputs.openjfx }}"
-
 jobs:
   build:
-    name: Build TestFX on ${{ inputs.os }} JDK ${{ inputs.jdk }} OpenJFX ${{ inputs.openjfx }}
-    runs-on: ${{ inputs.os }}
+    strategy:
+      matrix:
+        os: [ macos-latest, ubuntu-latest, windows-latest ]
+        include:
+          - os: macos-latest
+            FILE: openjfx-24+874_headless_mac-aarch64_bin-sdk
+          - os: ubuntu-latest
+            FILE: openjfx-24+871_headless_linux-x86_64_bin-sdk
+          - os: windows-latest
+            FILE: openjfx-24+875_headless_windows-x86_64_bin-sdk
+
+    runs-on: ${{ matrix.os }}
     timeout-minutes: 20
 
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup JDK
-        uses: actions/setup-java@v3
+      - name: Setup Java
+        uses: actions/setup-java@v4
         with:
-          distribution: zulu
-          java-package: jdk+fx
-          java-version: ${{ inputs.jdk }}
+          java-version: 22
+          distribution: 'temurin'
+
+      - name: Download SDK (Linux/macOS)
+        if: runner.os != 'Windows'
+        run: |
+          wget -nv https://download2.gluonhq.com/openjfx/forks/johan/headless/${{ matrix.FILE }}.zip -O ${{ matrix.FILE }}.zip
+          unzip -q ${{ matrix.FILE }}.zip
+          echo "JAVAFX_HOME=${{ github.workspace }}/javafx-sdk-24" >> ${GITHUB_ENV}
+
+      - name: Download SDK (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          Invoke-WebRequest https://download2.gluonhq.com/openjfx/forks/johan/headless/${{ matrix.FILE }}.zip -OutFile ${{ matrix.FILE }}.zip
+          Expand-Archive .\${{ matrix.FILE }}.zip -Force
+          Move-Item -Path .\${{ matrix.FILE }}\javafx-sdk-24 -Destination .\
+          echo "JAVAFX_HOME=${{ github.workspace }}\javafx-sdk-24" >> $env:GITHUB_ENV
 
       - name: Cache Gradle Resources
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ~/.gradle
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
           restore-keys: ${{ runner.os }}-gradle
 
-      - name: Set up Virtual Display (for Linux)
-        if: runner.os == 'Linux'
-        run: |
-          Xvfb ${{env.DISPLAY}} ${{env.XVFB_PARMS}} &
-
-      - name: Build
+      - name: Build (Linux/macOS)
+        if: runner.os != 'Windows'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          ./gradlew versions check
+          ./gradlew -Dtestfx.headless=true versions check
 
-      - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action/composite@v2
-        if: always()
+      - name: Build (Windows)
+        if: runner.os == 'Windows'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          .\gradlew -Dtestfx.headless=true versions check
+        shell: cmd
+
+      - name: Publish Test Results (Linux)
+        uses: EnricoMi/publish-unit-test-result-action/linux@v2
+        if: runner.os == 'Linux'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          check_name: Unit Test Results (${{ inputs.os }}-java-${{ inputs.jvm }})
+          check_name: Unit Test Results (${{ runner.os }})
           report_individual_runs: true
           check_run_annotations_branch: master
           check_run_annotations: all tests, skipped tests
           files: subprojects/**/build/test-results/**/*.xml
+
+      - name: Publish Test Results (macOS)
+        uses: EnricoMi/publish-unit-test-result-action/macos@v2
+        if: runner.os == 'macOS'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          check_name: Unit Test Results (${{ runner.os }})
+          report_individual_runs: true
+          check_run_annotations_branch: master
+          check_run_annotations: all tests, skipped tests
+          files: subprojects/**/build/test-results/**/*.xml
+
+      - name: Publish Test Results (Windows)
+        uses: EnricoMi/publish-unit-test-result-action/windows@v2
+        if: runner.os == 'Windows'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          check_name: Unit Test Results (${{ runner.os }})
+          report_individual_runs: true
+          check_run_annotations_branch: master
+          check_run_annotations: all tests, skipped tests
+          files: subprojects/**/build/test-results/**/*.xml
+
+      - name: Publish Snapshots
+        if: github.ref == 'refs/heads/master' && runner.os == 'Linux'
+        run: |
+          ver=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+          if [[ $ver == *"SNAPSHOT"* ]] 
+          then
+              ./gradlew publish -PgluonNexusDeployUsername=NEXUS_USERNAME -PgluonNexusDeployPassword=NEXUS_PASSWORD
+          fi
+        shell: bash
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
