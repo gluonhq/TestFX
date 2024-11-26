@@ -244,11 +244,11 @@ Finally, you must add a dependency corresponding to the matcher/assertions libra
 
 Download the latest JavaFX SDK that includes the experimental headless platform from here:
 
-- Linux AArch64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_linux-aarch64_bin-sdk.zip)
-- Linux x86_64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_linux-x86_64_bin-sdk.zip)
-- macOS AArch64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_mac-aarch64_bin-sdk.zip)
-- macOS x86_64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_mac-x86_64_bin-sdk.zip)
-- Windows x86_64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+77_headless_windows-x86_64_bin-sdk.zip)
+- Linux AArch64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+872_headless_linux-aarch64_bin-sdk.zip)
+- Linux x86_64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+871_headless_linux-x86_64_bin-sdk.zip)
+- macOS AArch64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+874_headless_mac-aarch64_bin-sdk.zip)
+- macOS x86_64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+873_headless_mac-x86_64_bin-sdk.zip)
+- Windows x86_64 [SDK](https://download2.gluonhq.com/openjfx/forks/johan/headless/openjfx-24+875_headless_windows-x86_64_bin-sdk.zip)
 
 Then extract the zip file to a path of your convenience, and set the following environmental variable:
 
