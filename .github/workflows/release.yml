@@ -1,0 +1,43 @@
+---
+name: Release
+
+on:
+  push:
+    tags: [ '*' ]
+
+permissions:
+  actions: read
+  checks: write
+  contents: read
+  issues: read
+  packages: read
+  pull-requests: write
+  statuses: read
+  security-events: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: 22
+          distribution: 'temurin'
+
+      - name: Publish Release
+        run: |
+          ver=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+          if [[ $ver != *"SNAPSHOT"* ]] 
+          then
+              ./gradlew publish -PgluonNexusDeployUsername=NEXUS_USERNAME -PgluonNexusDeployPassword=NEXUS_PASSWORD
+          fi
+        shell: bash
+        env:
+          NEXUS_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+          NEXUS_PASSWORD: ${{ secrets.NEXUS_PASSWORD }}
