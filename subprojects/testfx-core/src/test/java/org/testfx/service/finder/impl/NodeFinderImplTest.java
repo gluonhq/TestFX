@@ -78,7 +78,7 @@ public class NodeFinderImplTest {
 
     @After
     public void cleanup() throws TimeoutException {
-        FxToolkit.setupFixture(this::cleanupStages);
+        FxToolkit.cleanupStages();
     }
 
     @Before

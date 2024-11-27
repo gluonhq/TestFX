@@ -83,6 +83,7 @@ public class BoundsLocatorImplTest {
     @After
     public void cleanupSpec() throws TimeoutException {
         FxToolkit.setupFixture(() -> primaryWindow.close());
+        FxToolkit.cleanupStages();
     }
 
     @Before

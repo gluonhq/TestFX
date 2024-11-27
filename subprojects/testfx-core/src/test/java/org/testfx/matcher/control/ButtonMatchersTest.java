@@ -19,6 +19,7 @@ package org.testfx.matcher.control;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -54,6 +55,11 @@ public class ButtonMatchersTest extends FxRobot {
             return new StackPane(button);
         });
         FxToolkit.showStage();
+    }
+
+    @After
+    public final void tearDown() throws Throwable {
+        FxToolkit.cleanupStages();
     }
 
     @Test

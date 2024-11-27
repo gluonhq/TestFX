@@ -20,6 +20,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -54,6 +55,11 @@ public class ComboBoxMatchersTest extends FxRobot {
             return new StackPane(comboBox);
         });
         FxToolkit.showStage();
+    }
+
+    @After
+    public final void tearDown() throws Throwable {
+        FxToolkit.cleanupStages();
     }
 
     @Test

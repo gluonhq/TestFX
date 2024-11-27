@@ -33,6 +33,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -85,6 +86,11 @@ public class CaptureSupportImplTest extends FxRobot {
         primaryStage = FxToolkit.registerPrimaryStage();
         capturer = new CaptureSupportImpl(new BaseRobotImpl());
         FxToolkit.setupApplication(LoginDialog.class);
+    }
+
+    @After
+    public final void tearDown() throws Throwable {
+        FxToolkit.cleanupStages();
     }
 
     @Test

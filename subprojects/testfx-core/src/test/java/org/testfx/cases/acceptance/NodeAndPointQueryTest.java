@@ -29,6 +29,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 
 import org.assertj.core.api.Assertions;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -80,6 +81,11 @@ public class NodeAndPointQueryTest {
             stage.setScene(scene);
             stage.show();
         });
+    }
+
+    @After
+    public final void tearDown() throws Throwable {
+        FxToolkit.cleanupStages();
     }
 
     @Test

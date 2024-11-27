@@ -112,9 +112,10 @@ public class ShortcutKeyTest extends FxRobot {
     }
 
     @After
-    public void cleanup() {
+    public final void tearDown() throws Throwable {
         // prevent hanging if test fails
         release(new KeyCode[0]);
+        FxToolkit.cleanupStages();
     }
 
     /**

@@ -21,6 +21,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.StackPane;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -56,6 +57,11 @@ public class ListViewMatchersTest extends FxRobot {
             return new StackPane(listView);
         });
         FxToolkit.showStage();
+    }
+
+    @After
+    public final void tearDown() throws Throwable {
+        FxToolkit.cleanupStages();
     }
 
     @Test

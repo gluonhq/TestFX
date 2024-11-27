@@ -19,6 +19,7 @@ package org.testfx.assertions.api;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -44,6 +45,11 @@ public class ButtonAssertTest extends FxRobot {
             return new StackPane(button);
         });
         FxToolkit.showStage();
+    }
+
+    @After
+    public final void tearDown() throws Throwable {
+        FxToolkit.cleanupStages();
     }
 
     @Test

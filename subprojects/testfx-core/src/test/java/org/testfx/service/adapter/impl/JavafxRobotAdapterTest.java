@@ -109,9 +109,10 @@ public class JavafxRobotAdapterTest {
     }
 
     @After
-    public void cleanup() {
+    public final void tearDown() throws Throwable {
         robotAdapter.keyRelease(KeyCode.A);
         robotAdapter.mouseRelease(MouseButton.PRIMARY);
+        FxToolkit.cleanupStages();
     }
 
     @Test

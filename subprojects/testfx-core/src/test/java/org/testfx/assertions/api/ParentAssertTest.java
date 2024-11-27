@@ -20,6 +20,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.testfx.api.FxRobot;
@@ -33,6 +34,11 @@ public class ParentAssertTest extends FxRobot {
     @BeforeClass
     public static void setupSpec() throws Exception {
         FxToolkit.registerPrimaryStage();
+    }
+
+    @After
+    public final void tearDown() throws Throwable {
+        FxToolkit.cleanupStages();
     }
 
     @Test

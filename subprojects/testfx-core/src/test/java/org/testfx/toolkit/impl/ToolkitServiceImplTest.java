@@ -19,6 +19,7 @@ package org.testfx.toolkit.impl;
 import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Parent;
@@ -34,6 +35,7 @@ import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.testfx.TestFXRule;
+import org.testfx.api.FxToolkit;
 import org.testfx.toolkit.PrimaryStageApplication;
 import org.testfx.toolkit.ToolkitService;
 
@@ -66,6 +68,7 @@ public class ToolkitServiceImplTest {
     @Before
     public void setup() {
         waitForAsyncFx(2000, () -> {
+            Platform.setImplicitExit(false);
             primaryStage.show();
             primaryStage.toBack();
             primaryStage.toFront();
@@ -73,11 +76,8 @@ public class ToolkitServiceImplTest {
     }
 
     @After
-    public void cleanup() {
-        waitForAsyncFx(2000, () -> {
-            Platform.setImplicitExit(false);
-            primaryStage.hide();
-        });
+    public void cleanup() throws TimeoutException {
+        FxToolkit.cleanupStages();
     }
 
     @Test
@@ -131,7 +131,7 @@ public class ToolkitServiceImplTest {
 
     public static class FixtureScene extends Scene {
         public FixtureScene() {
-            super(new Region(), 400, 200);
+            super(new Region(), 300, 150);
             printCurrentThreadName("Scene#init()");
             Parent parent = new StackPane(new Label(getClass().getSimpleName()));
             setRoot(parent);

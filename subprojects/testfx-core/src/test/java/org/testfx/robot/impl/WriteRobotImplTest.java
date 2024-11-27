@@ -21,6 +21,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Rule;
@@ -64,6 +65,11 @@ public class WriteRobotImplTest {
         sleepRobot = mock(SleepRobot.class);
         windowFinder = mock(WindowFinder.class);
         writeRobot = new WriteRobotImpl(baseRobot, sleepRobot, windowFinder);
+    }
+
+    @After
+    public final void tearDown() throws Throwable {
+        FxToolkit.cleanupStages();
     }
 
     @Test

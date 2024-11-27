@@ -21,16 +21,22 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Rule;
 import org.junit.Test;
 import org.testfx.TestFXRule;
+import org.testfx.api.FxRobot;
 import org.testfx.api.FxToolkit;
-import org.testfx.cases.TestCaseBase;
 
-public class SimpleLabelTest extends TestCaseBase {
+public class SimpleLabelTest extends FxRobot {
 
     @Rule
     public TestFXRule testFXRule = new TestFXRule();
+
+    @BeforeClass
+    public static void setupSpec() throws Exception {
+        FxToolkit.registerPrimaryStage();
+    }
 
     @Before
     public void setup() throws Exception {
