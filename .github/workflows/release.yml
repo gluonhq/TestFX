@@ -35,7 +35,7 @@ jobs:
           ver=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
           if [[ $ver != *"SNAPSHOT"* ]] 
           then
-              ./gradlew publish -PgluonNexusDeployUsername=NEXUS_USERNAME -PgluonNexusDeployPassword=NEXUS_PASSWORD
+              ./gradlew publish -PgluonNexusDeployUsername=$NEXUS_USERNAME -PgluonNexusDeployPassword=$NEXUS_PASSWORD
           fi
         shell: bash
         env:
