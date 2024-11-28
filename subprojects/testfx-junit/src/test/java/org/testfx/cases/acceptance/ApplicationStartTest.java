@@ -22,7 +22,6 @@ import java.util.concurrent.TimeoutException;
 import javafx.beans.InvalidationListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
 import org.junit.Rule;
