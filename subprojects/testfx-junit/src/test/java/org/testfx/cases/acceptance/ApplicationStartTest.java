@@ -87,9 +87,7 @@ public class ApplicationStartTest extends ApplicationTest {
     @Test(timeout = 3000)
     public void should_click_on_button() throws InterruptedException {
         // when:
-        moveTo(".button");
-        press(MouseButton.PRIMARY);
-        release(MouseButton.PRIMARY);
+        clickOn(".button");
 
         // then:
         setButtonTextLatch.await(3, TimeUnit.SECONDS);
