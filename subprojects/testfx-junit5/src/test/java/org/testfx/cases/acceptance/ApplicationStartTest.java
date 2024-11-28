@@ -21,7 +21,6 @@ import java.util.concurrent.TimeUnit;
 import javafx.beans.InvalidationListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
 import org.junit.jupiter.api.Test;
@@ -80,9 +79,7 @@ class ApplicationStartTest extends ApplicationTest {
     @Test
     void should_click_on_button() throws InterruptedException {
         // when:
-        moveTo(".button");
-        press(MouseButton.PRIMARY);
-        release(MouseButton.PRIMARY);
+        clickOn(".button");
 
         buttonClickedLatch.await(5, TimeUnit.SECONDS);
         verifyThat(waitForAsyncFx(3000, () -> button.getText()), equalTo("clicked!"), informedErrorMessage(this));
