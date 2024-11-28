@@ -21,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 import javafx.beans.InvalidationListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.input.MouseButton;
 import javafx.stage.Stage;
 
 import org.junit.jupiter.api.Test;
@@ -47,11 +48,9 @@ class ApplicationStartTest extends ApplicationTest {
             setSceneLatch.countDown();
             stage.sceneProperty().removeListener(invalidationListener);
         });
-        System.out.println("start latch");
         buttonClickedLatch = new CountDownLatch(1);
         button = new Button("click me!");
         button.setOnAction(actionEvent -> {
-            System.out.println("button clicked");
             button.setText("clicked!");
             buttonClickedLatch.countDown();
         });
@@ -74,26 +73,18 @@ class ApplicationStartTest extends ApplicationTest {
 
     @Test
     void should_contain_button() {
-        System.out.println("test 1");
         // expect:
         verifyThat(".button", hasText("click me!"), informedErrorMessage(this));
-        System.out.println("test 1 done");
     }
 
     @Test
     void should_click_on_button() throws InterruptedException {
-        System.out.println("test 2");
         // when:
-        clickOn(".button");
-        System.out.println("test2 clicked");
+        moveTo(".button");
+        press(MouseButton.PRIMARY);
+        release(MouseButton.PRIMARY);
 
         buttonClickedLatch.await(5, TimeUnit.SECONDS);
-        System.out.println("test 2 wait");
-        verifyThat(waitForAsyncFx(5000, () -> {
-            String text = button.getText();
-            System.out.println("test 2 text: " + text);
-            return text;
-        }), equalTo("clicked!"), informedErrorMessage(this));
-        System.out.println("test 2 done");
+        verifyThat(waitForAsyncFx(3000, () -> button.getText()), equalTo("clicked!"), informedErrorMessage(this));
     }
 }

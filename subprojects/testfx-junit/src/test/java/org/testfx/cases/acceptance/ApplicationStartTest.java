@@ -50,12 +50,12 @@ public class ApplicationStartTest extends ApplicationTest {
     @Override
     public void start(Stage stage) {
         CountDownLatch setSceneLatch = new CountDownLatch(1);
-        setButtonTextLatch = new CountDownLatch(1);
         InvalidationListener invalidationListener = observable -> setSceneLatch.countDown();
         stage.sceneProperty().addListener(observable -> {
             setSceneLatch.countDown();
             stage.sceneProperty().removeListener(invalidationListener);
         });
+        setButtonTextLatch = new CountDownLatch(1);
         Button button = new Button("click me!");
         button.setOnAction(actionEvent -> {
             button.setText("clicked!");
@@ -85,13 +85,14 @@ public class ApplicationStartTest extends ApplicationTest {
     }
 
     @Test(timeout = 3000)
-    public void should_click_on_button() {
+    public void should_click_on_button() throws InterruptedException {
         // when:
         moveTo(".button");
         press(MouseButton.PRIMARY);
         release(MouseButton.PRIMARY);
 
         // then:
+        setButtonTextLatch.await(3, TimeUnit.SECONDS);
         verifyThat(".button", hasText("clicked!"), informedErrorMessage(this));
     }
 
