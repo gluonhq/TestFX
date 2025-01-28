@@ -78,6 +78,11 @@ public class ApplicationExtension extends FxRobot implements BeforeEachCallback,
 
     @Override
     public void beforeEach(ExtensionContext context) throws Exception {
+        if (context.getTestClass().isPresent() && context.getTestClass().get().isAnnotationPresent(IsolateContext.class)) {
+            FxToolkit.useIsolatedContext(context.getRequiredTestClass());
+        } else {
+            FxToolkit.useGlobalContext();
+        }
         FxToolkit.registerPrimaryStage();
         FxToolkit.setupApplication(() -> new ApplicationAdapter(applicationFixture));
     }
