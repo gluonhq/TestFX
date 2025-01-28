@@ -18,6 +18,7 @@ package org.testfx.api;
 
 import java.util.Set;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
@@ -94,13 +95,31 @@ public final class FxToolkit {
 
     private static final ApplicationLauncher APP_LAUNCHER = new ApplicationLauncherImpl();
     private static final ApplicationService APP_SERVICE = new ApplicationServiceImpl();
-    private static final FxToolkitContext CONTEXT = new FxToolkitContext();
-    private static final ToolkitService SERVICE = new ToolkitServiceImpl(APP_LAUNCHER, APP_SERVICE);
+    private static final FxToolkitContext GLOBAL_CONTEXT = new FxToolkitContext();
+    private static final ToolkitService GLOBAL_SERVICE = new ToolkitServiceImpl(APP_LAUNCHER, APP_SERVICE);
+    private static final ConcurrentHashMap<Class<?>, FxToolkitContext> ISOLATED_CONTEXTS = new ConcurrentHashMap<>();
+
+    private static FxToolkitContext currentContext = GLOBAL_CONTEXT;
+    private static ToolkitService currentService = GLOBAL_SERVICE;
     static final String UNSUPPORTED_OPERATION_ERROR_MESSAGE = "Internal Error";
     static final String UNSUPPORTED_OPERATION_CALLING_CLASS = "com.sun.glass.ui.gtk.GtkApplication";
     static final String MISSING_LIBGTK_3_0_USER_MESSAGE = "Package libgtk-3-0 probably not installed";
 
     private FxToolkit() {}
+
+    public static void useIsolatedContext(Class<?> testClass) {
+        ISOLATED_CONTEXTS.computeIfAbsent(testClass, clazz -> new FxToolkitContext());
+        switchToContext(ISOLATED_CONTEXTS.get(testClass));
+    }
+
+    public static void useGlobalContext() {
+        switchToContext(GLOBAL_CONTEXT);
+    }
+
+    private static void switchToContext(FxToolkitContext context) {
+        currentContext = context;
+        currentService = new ToolkitServiceImpl(APP_LAUNCHER, APP_SERVICE);
+    }
 
     /**
      * Sets up the {@link org.testfx.toolkit.PrimaryStageApplication} to use in tests, prevents it from shutting
@@ -110,14 +129,13 @@ public final class FxToolkit {
      */
     public static Stage registerPrimaryStage() throws TimeoutException {
         try {
-            Stage primaryStage = waitFor(CONTEXT.getLaunchTimeoutInMillis(), MILLISECONDS,
-                    SERVICE.setupPrimaryStage(CONTEXT.getPrimaryStageFuture(),
-                            CONTEXT.getApplicationClass(), CONTEXT.getApplicationArgs()));
-            CONTEXT.setRegisteredStage(primaryStage);
+            Stage primaryStage = waitFor(currentContext.getLaunchTimeoutInMillis(), MILLISECONDS,
+                    currentService.setupPrimaryStage(currentContext.getPrimaryStageFuture(),
+                            currentContext.getApplicationClass(), currentContext.getApplicationArgs()));
+            currentContext.setRegisteredStage(primaryStage);
             Platform.setImplicitExit(false);
             return primaryStage;
-        }
-        catch (UnsupportedOperationException exception) {
+        } catch (UnsupportedOperationException exception) {
             handleCommonRuntimeExceptions(exception);
         }
         return null;
@@ -131,7 +149,7 @@ public final class FxToolkit {
      */
     public static Stage registerStage(Supplier<Stage> stageSupplier) throws TimeoutException {
         Stage stage = setupFixture(stageSupplier::get);
-        CONTEXT.setRegisteredStage(stage);
+        currentContext.setRegisteredStage(stage);
         return stage;
     }
 
@@ -142,7 +160,7 @@ public final class FxToolkit {
      * @throws TimeoutException if execution is not finished before {@link FxToolkitContext#getSetupTimeoutInMillis()}
      */
     public static Stage setupStage(Consumer<Stage> stageConsumer) throws TimeoutException {
-        return waitForSetup(SERVICE.setupStage(CONTEXT.getRegisteredStage(), stageConsumer));
+        return waitForSetup(currentService.setupStage(currentContext.getRegisteredStage(), stageConsumer));
     }
 
     /**
@@ -152,7 +170,7 @@ public final class FxToolkit {
      */
     public static Application setupApplication(Class<? extends Application> applicationClass, String... applicationArgs)
             throws TimeoutException {
-        return waitForSetup(SERVICE.setupApplication(CONTEXT::getRegisteredStage, applicationClass, applicationArgs));
+        return waitForSetup(currentService.setupApplication(currentContext::getRegisteredStage, applicationClass, applicationArgs));
     }
 
     /**
@@ -161,7 +179,7 @@ public final class FxToolkit {
      * @throws TimeoutException if execution is not finished before {@link FxToolkitContext#getSetupTimeoutInMillis()}
      */
     public static Application setupApplication(Supplier<Application> applicationSupplier) throws TimeoutException {
-        return waitForSetup(SERVICE.setupApplication(CONTEXT::getRegisteredStage, applicationSupplier));
+        return waitForSetup(currentService.setupApplication(currentContext::getRegisteredStage, applicationSupplier));
     }
 
     /**
@@ -175,7 +193,7 @@ public final class FxToolkit {
      */
     public static void cleanupApplication(Application application) throws TimeoutException {
         if (isFXApplicationThreadRunning()) {
-            waitForSetup(SERVICE.cleanupApplication(application));
+            waitForSetup(currentService.cleanupApplication(application));
         } else {
             throw new TimeoutException("FX Application Thread not running");
         }
@@ -199,7 +217,7 @@ public final class FxToolkit {
      * @throws TimeoutException if execution is not finished before {@link FxToolkitContext#getSetupTimeoutInMillis()}
      */
     public static Scene setupScene(Supplier<Scene> sceneSupplier) throws TimeoutException {
-        return waitForSetup(SERVICE.setupScene(CONTEXT.getRegisteredStage(), sceneSupplier));
+        return waitForSetup(currentService.setupScene(currentContext.getRegisteredStage(), sceneSupplier));
     }
 
     /**
@@ -207,21 +225,21 @@ public final class FxToolkit {
      * root node to the supplied root node, and returns the supplied root node once finished.
      */
     public static Parent setupSceneRoot(Supplier<Parent> sceneRootSupplier) throws TimeoutException {
-        return waitForSetup(SERVICE.setupSceneRoot(CONTEXT.getRegisteredStage(), sceneRootSupplier));
+        return waitForSetup(currentService.setupSceneRoot(currentContext.getRegisteredStage(), sceneRootSupplier));
     }
 
     /**
      * Runs the given {@code runnable} on the {@code JavaFX Application Thread} and returns once finished.
      */
     public static void setupFixture(Runnable runnable) throws TimeoutException {
-        waitForSetup(SERVICE.setupFixture(runnable));
+        waitForSetup(currentService.setupFixture(runnable));
     }
 
     /**
      * Runs the given {@code callable} on the {@code JavaFX Application Thread} and returns once finished.
      */
     public static <T> T setupFixture(Callable<T> callable) throws TimeoutException {
-        return waitForSetup(SERVICE.setupFixture(callable));
+        return waitForSetup(currentService.setupFixture(callable));
     }
 
     /**
@@ -266,7 +284,7 @@ public final class FxToolkit {
      * Returns the internal context.
      */
     public static FxToolkitContext toolkitContext() {
-        return CONTEXT;
+        return currentContext;
     }
 
     /**
@@ -274,7 +292,7 @@ public final class FxToolkit {
      * {@link FxToolkitContext#getSetupTimeoutInMillis()} is reached.
      */
     private static <T> T waitForSetup(Future<T> future) throws TimeoutException {
-        T ret = waitFor(CONTEXT.getSetupTimeoutInMillis(), MILLISECONDS, future);
+        T ret = waitFor(currentContext.getSetupTimeoutInMillis(), MILLISECONDS, future);
         waitForFxEvents();
         return ret;
     }
