@@ -55,7 +55,6 @@ public class ToolkitServiceImpl implements ToolkitService {
     public Future<Stage> setupPrimaryStage(CompletableFuture<Stage> primaryStageFuture,
                                            Class<? extends Application> applicationClass,
                                            String... applicationArgs) {
-        System.out.println("ToolkitServiceImpl.setupPrimaryStage");
         if (!primaryStageFuture.isDone()) {
             async(() -> {
                 try {
@@ -112,7 +111,6 @@ public class ToolkitServiceImpl implements ToolkitService {
     public Future<Application> setupApplication(Supplier<Stage> stageSupplier,
                                                 Class<? extends Application> applicationClass,
                                                 String... applicationArgs) {
-        System.out.println("ToolkitServiceImpl.setupApplication");
         return async(() -> {
             Application application = asyncFx(() -> createApplication(applicationClass)).get();
             registerApplicationParameters(application, applicationArgs);
@@ -126,7 +124,6 @@ public class ToolkitServiceImpl implements ToolkitService {
     public Future<Application> setupApplication(Supplier<Stage> stageSupplier,
                                                 Supplier<Application> applicationSupplier,
                                                 String... applicationArgs) {
-        System.out.println("ToolkitServiceImpl.setupApplication");
         return async(() -> {
             Application application = asyncFx(applicationSupplier::get).get();
             registerApplicationParameters(application, applicationArgs);
