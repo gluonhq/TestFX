@@ -20,8 +20,7 @@ apply plugin: 'org.openjfx.javafxplugin'
 ext.pomName = 'TestFX Spock'
 ext.pomDescription = 'TestFX Spock library'
 ext.moduleName = 'org.testfx.spock'
-ext.openjfxVersion = '23.0.1'
-ext.headlessSDKPath = System.getenv("JAVAFX_HOME")
+ext.openjfxVersion = '26-ea+2'
 
 apply plugin: 'groovy'
 //apply plugin: 'codenarc'
@@ -64,7 +63,6 @@ artifacts {
 }
 
 javafx {
-    sdk = headlessSDKPath
     version = openjfxVersion
     modules = [ 'javafx.controls' ]
 }
@@ -72,8 +70,8 @@ javafx {
 dependencies {
     implementation project(":testfx-core")
 
-    compileOnly 'org.spockframework:spock-core:2.4-M4-groovy-4.0'
-    testCompileOnly 'org.spockframework:spock-core:2.4-M4-groovy-4.0'
+    compileOnly 'org.spockframework:spock-core:2.4-M6-groovy-4.0'
+    testCompileOnly 'org.spockframework:spock-core:2.4-M6-groovy-4.0'
 }
 
 test {

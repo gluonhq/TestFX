@@ -34,6 +34,7 @@ public class ApplicationLauncherImpl implements ApplicationLauncher {
                 System.out.println("testfx: headless mode requested");
             }
             System.setProperty("glass.platform", "Headless");
+            System.setProperty("prism.order", "sw");
         }
     }
 

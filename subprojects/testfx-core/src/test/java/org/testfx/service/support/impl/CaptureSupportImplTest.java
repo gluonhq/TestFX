@@ -49,11 +49,9 @@ import org.testfx.service.support.PixelMatcherResult;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.junit.Assume.assumeThat;
 import static org.testfx.api.FxAssert.verifyThat;
 
 public class CaptureSupportImplTest extends FxRobot {
@@ -96,8 +94,6 @@ public class CaptureSupportImplTest extends FxRobot {
     @Test
     public void capture_node() {
         // given:
-        // TODO HEADLESS: Enable screen capture
-        assumeThat(System.getProperty("testfx.headless"), is(not(equalTo("true"))));
 
         // when:
         Image image = capturer.captureNode(primaryStage.getScene().getRoot());
@@ -110,8 +106,6 @@ public class CaptureSupportImplTest extends FxRobot {
     @Test
     public void capture_region() {
         // given:
-        // TODO HEADLESS: Enable screen capture
-        assumeThat(System.getProperty("testfx.headless"), is(not(equalTo("true"))));
 
         // when:
         Image image = capturer.captureRegion(new Rectangle2D(0, 0, 100, 200));
@@ -195,8 +189,6 @@ public class CaptureSupportImplTest extends FxRobot {
     @Test
     public void match_images() throws IOException {
         // given:
-        // TODO HEADLESS: Enable screen capture
-        assumeThat(System.getProperty("testfx.headless"), is(not(equalTo("true"))));
 
         // given:
         Image image0 = capturer.loadImage(resourcePath(getClass(), "acme-login-expected.png"));
@@ -217,8 +209,6 @@ public class CaptureSupportImplTest extends FxRobot {
     @Test
     public void match_images_from_scene() throws IOException {
         // given:
-        // TODO HEADLESS: Enable screen capture
-        assumeThat(System.getProperty("testfx.headless"), is(not(equalTo("true"))));
         interact(() -> primaryStage.getScene().lookup("#loginButton").requestFocus());
         Image image0 = capturer.captureNode(primaryStage.getScene().getRoot());
 

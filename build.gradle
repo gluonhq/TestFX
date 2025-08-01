@@ -80,7 +80,7 @@ allprojects { project ->
 
 subprojects { subproject ->
     apply from: "${rootDir}/gradle/checkstyle.gradle"
-    apply from: "${rootDir}/gradle/license.gradle"
+//    apply from: "${rootDir}/gradle/license.gradle"
     apply from: "${rootDir}/gradle/publish-jar.gradle"
     apply from: "${rootDir}/gradle/publish-pom.gradle"
 

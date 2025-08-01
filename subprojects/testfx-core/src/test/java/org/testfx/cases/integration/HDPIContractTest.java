@@ -471,9 +471,6 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void capturePixelColorGlassAdapterTest() {
-        // TODO HEADLESS: Enable screen capture
-        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
-
         try {
             capturePixelColorAdapterTest(glassAdapter);
         }
@@ -552,9 +549,6 @@ public class HDPIContractTest extends FxRobot {
 
     @Test
     public void captureRegionGlassAdapterTest() {
-        // TODO HEADLESS: Enable screen capture
-        assumeThat(System.getProperty("testfx.headless"), is(not(CoreMatchers.equalTo("true"))));
-
         try {
             captureRegionAdapterTest(glassAdapter);
         }

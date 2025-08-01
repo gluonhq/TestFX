@@ -20,15 +20,13 @@ apply plugin: 'org.openjfx.javafxplugin'
 ext.pomName = 'TestFX JUnit5'
 ext.pomDescription = 'TestFX JUnit5 library'
 ext.moduleName = 'org.testfx.junit5'
-ext.openjfxVersion = '23.0.1'
-ext.headlessSDKPath = System.getenv("JAVAFX_HOME")
+ext.openjfxVersion = '26-ea+2'
 
 repositories {
     mavenCentral()
 }
 
 javafx {
-    sdk = headlessSDKPath
     version = openjfxVersion
     modules = [ 'javafx.controls', 'javafx.swing', 'javafx.fxml' ]
 }
